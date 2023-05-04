@@ -8,6 +8,10 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.ada_tech_quizz.R;
+import com.example.ada_tech_quizz.model.Question;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -33,6 +37,20 @@ public class GameActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String name = intent.getStringExtra("name_key");
 
-        mQuestionText.setText(name);
+        Question question1 = new Question("Click on 3",
+                Arrays.asList(
+                        "0",
+                        "1",
+                        "toto",
+                        "3"
+                ), 3);
+
+        mQuestionText.setText(question1.getQuestion());
+        String[] mQuestionList = question1.getChoiceList().toArray(new String[0]);
+        mButton1.setText(mQuestionList[0]);
+        mButton2.setText(mQuestionList[1]);
+        mButton3.setText(mQuestionList[2]);
+        mButton4.setText(mQuestionList[3]);
+
     }
 }
