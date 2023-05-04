@@ -1,10 +1,13 @@
-package com.example.ada_tech_quizz;
+package com.example.ada_tech_quizz.controller;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.example.ada_tech_quizz.R;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -27,6 +30,9 @@ public class GameActivity extends AppCompatActivity {
         mButton3 = findViewById(R.id.game_activity_button_3);
         mButton4 = findViewById(R.id.game_activity_button_4);
 
+        Intent intent = getIntent();
+        String name = intent.getStringExtra("name_key");
 
+        mQuestionText.setText(name);
     }
 }
