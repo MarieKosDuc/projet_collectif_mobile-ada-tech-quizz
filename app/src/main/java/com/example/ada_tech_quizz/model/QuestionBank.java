@@ -7,6 +7,11 @@ public class QuestionBank {
     private List<Question> mQuestionList;
     private int mNextQuestionIndex;
 
+    public QuestionBank(List<Question> questionList, int nextQuestionIndex) {
+        mQuestionList = questionList;
+        mNextQuestionIndex = nextQuestionIndex;
+    }
+
     public QuestionBank(List<Question> questionList){
         //Shuffle the question list before storing it
     }
