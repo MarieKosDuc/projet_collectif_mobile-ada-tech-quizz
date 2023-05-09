@@ -11,7 +11,9 @@ import android.widget.Toast;
 
 import com.example.ada_tech_quizz.R;
 import com.example.ada_tech_quizz.model.Question;
+import com.example.ada_tech_quizz.model.QuestionBank;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,6 +32,21 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     "toto",
                     "3"
             ), 3);
+
+    private Question question2 = new Question("Click on 1",
+            Arrays.asList(
+                    "0",
+                    "1",
+                    "titi",
+                    "3"
+            ), 1);
+
+    private QuestionBank mQuestionBank = initializeQuestionBank();
+
+    public QuestionBank initializeQuestionBank(){
+        List<Question> questions = new ArrayList<Question>();
+        return new QuestionBank(questions);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,13 +68,17 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         Intent intent = getIntent();
         String name = intent.getStringExtra("name_key");
 
-        mQuestionText.setText(question1.getQuestion());
-        String[] mQuestionList = question1.getChoiceList().toArray(new String[0]);
+        displayQuestion(question1);
+
+    }
+
+    private void displayQuestion(final Question question){
+        mQuestionText.setText(question.getQuestion());
+        String[] mQuestionList = question.getChoiceList().toArray(new String[0]);
         mButton1.setText(mQuestionList[0]);
         mButton2.setText(mQuestionList[1]);
         mButton3.setText(mQuestionList[2]);
         mButton4.setText(mQuestionList[3]);
-
     }
 
     @Override
