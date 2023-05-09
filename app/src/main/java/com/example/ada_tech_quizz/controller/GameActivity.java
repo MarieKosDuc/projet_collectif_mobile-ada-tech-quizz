@@ -15,7 +15,7 @@ import com.example.ada_tech_quizz.model.Question;
 import java.util.Arrays;
 import java.util.List;
 
-public class GameActivity extends AppCompatActivity implements View.OnClickListener {
+public class GameActivity extends AppCompatActivity implements View.OnClickListener{
 
     // initialization of the member variables
     private TextView mQuestionText;
@@ -43,19 +43,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         mButton3 = findViewById(R.id.game_activity_button_3);
         mButton4 = findViewById(R.id.game_activity_button_4);
 
-        // use the same listener for the 4 buttons
-
         mButton1.setOnClickListener(this);
         mButton2.setOnClickListener(this);
         mButton3.setOnClickListener(this);
         mButton4.setOnClickListener(this);
 
-
         Intent intent = getIntent();
         String name = intent.getStringExtra("name_key");
-
-        Toast.makeText(this, "Hello "+ name, Toast.LENGTH_SHORT).show();
-
 
         mQuestionText.setText(question1.getQuestion());
         String[] mQuestionList = question1.getChoiceList().toArray(new String[0]);
@@ -69,26 +63,22 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         int index;
-
-        if (v == mButton1){
+        if(v == mButton1){
             index = 0;
-        } else if (v == mButton2){
+        } else if(v == mButton2){
             index = 1;
-        } else if (v == mButton3){
+        } else if(v == mButton3){
             index = 2;
-        } else if (v == mButton4){
+        }else if(v == mButton4){
             index = 3;
-        } else {
+        } else{
             throw new IllegalStateException("Unknown clicked view : " + v);
         }
 
-        if (index == question1.getAnswerIndex()){
+        if(index == question1.getAnswerIndex()){
             Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(this, "Incorrect!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Wrong!", Toast.LENGTH_SHORT).show();
         }
-
-
-
     }
 }
