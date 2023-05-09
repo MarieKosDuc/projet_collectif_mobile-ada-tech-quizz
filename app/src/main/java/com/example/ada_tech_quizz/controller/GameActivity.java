@@ -11,7 +11,9 @@ import android.widget.Toast;
 
 import com.example.ada_tech_quizz.R;
 import com.example.ada_tech_quizz.model.Question;
+import com.example.ada_tech_quizz.model.QuestionBank;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -23,13 +25,33 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private Button mButton2;
     private Button mButton3;
     private Button mButton4;
-    private Question question1 = new Question("Click on 3",
-            Arrays.asList(
-                    "0",
-                    "1",
-                    "toto",
-                    "3"
-            ), 3);
+
+    private QuestionBank mQuestionBank = initializeQuestionBank();
+
+
+
+    // method to generate a new questionBank
+    private QuestionBank initializeQuestionBank(){
+        List<Question> newQuestionList = new ArrayList<Question>();
+        Question question1 = new Question("Click on 3",
+                Arrays.asList(
+                        "0",
+                        "1",
+                        "toto",
+                        "3"
+                ), 3);
+        newQuestionList.add(question1);
+
+        Question question2 = new Question("Click on 1",
+                Arrays.asList(
+                        "0",
+                        "1",
+                        "toto",
+                        "3"
+                ), 1);
+        newQuestionList.add(question2);
+        return new QuestionBank(newQuestionList);
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,13 +73,17 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         Intent intent = getIntent();
         String name = intent.getStringExtra("name_key");
 
-        mQuestionText.setText(question1.getQuestion());
-        String[] mQuestionList = question1.getChoiceList().toArray(new String[0]);
+        displayQuestion(mQuestionBank.getCurrentQuestion());
+
+    }
+
+    private void displayQuestion(final Question question){
+        mQuestionText.setText(question.getQuestion());
+        String[] mQuestionList = question.getChoiceList().toArray(new String[0]);
         mButton1.setText(mQuestionList[0]);
         mButton2.setText(mQuestionList[1]);
         mButton3.setText(mQuestionList[2]);
         mButton4.setText(mQuestionList[3]);
-
     }
 
     @Override
@@ -75,8 +101,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             throw new IllegalStateException("Unknown clicked view : " + v);
         }
 
-        if(index == question1.getAnswerIndex()){
+        if(index == mQuestionBank.getCurrentQuestion().getAnswerIndex()){
             Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show();
+            mQuestionBank.getNextQuestion();
+            displayQuestion(mQuestionBank.getCurrentQuestion());
         } else {
             Toast.makeText(this, "Wrong!", Toast.LENGTH_SHORT).show();
         }

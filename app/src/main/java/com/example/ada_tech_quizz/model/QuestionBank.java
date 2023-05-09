@@ -5,20 +5,22 @@ import java.util.List;
 public class QuestionBank {
 
     private List<Question> mQuestionList;
-    private int mNextQuestionIndex;
+    private int mNextQuestionIndex = 0;
 
-    public QuestionBank(List<Question> questionList, int nextQuestionIndex) {
+    // This is the constructor
+    public QuestionBank(List<Question> questionList) {
         mQuestionList = questionList;
-        mNextQuestionIndex = nextQuestionIndex;
     }
 
-    public QuestionBank(List<Question> questionList){
-        //Shuffle the question list before storing it
+    public Question getCurrentQuestion(){
+        // return
+        return mQuestionList.get(mNextQuestionIndex);
     }
 
-    public Question getNextQuestion(){
+
+    public int getNextQuestion(){
         //Loop over the questions and return a new one at each call
-        return null;
+        return mNextQuestionIndex++;
     }
 
 
