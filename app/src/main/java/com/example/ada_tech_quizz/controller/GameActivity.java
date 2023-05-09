@@ -25,9 +25,32 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private Button mButton2;
     private Button mButton3;
     private Button mButton4;
-
     private QuestionBank mQuestionBank = initializeQuestionBank();
 
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_game);
+
+        // plugging the variables into the layout components
+        mQuestionText = findViewById(R.id.game_activity_textview_question);
+        mButton1 = findViewById(R.id.game_activity_button_1);
+        mButton2 = findViewById(R.id.game_activity_button_2);
+        mButton3 = findViewById(R.id.game_activity_button_3);
+        mButton4 = findViewById(R.id.game_activity_button_4);
+
+        mButton1.setOnClickListener(this);
+        mButton2.setOnClickListener(this);
+        mButton3.setOnClickListener(this);
+        mButton4.setOnClickListener(this);
+
+        Intent intent = getIntent();
+        String name = intent.getStringExtra("name_key");
+
+        displayQuestion(mQuestionBank.getCurrentQuestion());
+
+    }
 
 
     // method to generate a new questionBank
@@ -62,30 +85,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         return new QuestionBank(newQuestionList);
     };
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game);
-
-        // plugging the variables into the layout components
-        mQuestionText = findViewById(R.id.game_activity_textview_question);
-        mButton1 = findViewById(R.id.game_activity_button_1);
-        mButton2 = findViewById(R.id.game_activity_button_2);
-        mButton3 = findViewById(R.id.game_activity_button_3);
-        mButton4 = findViewById(R.id.game_activity_button_4);
-
-        mButton1.setOnClickListener(this);
-        mButton2.setOnClickListener(this);
-        mButton3.setOnClickListener(this);
-        mButton4.setOnClickListener(this);
-
-        Intent intent = getIntent();
-        String name = intent.getStringExtra("name_key");
-
-        displayQuestion(mQuestionBank.getCurrentQuestion());
-
-    }
-
+    // method to display a question
     private void displayQuestion(final Question question){
         mQuestionText.setText(question.getQuestion());
         String[] mQuestionList = question.getChoiceList().toArray(new String[0]);
@@ -95,6 +95,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         mButton4.setText(mQuestionList[3]);
     }
 
+    // onclick to verify the player's answer and go to the next question if correct
     @Override
     public void onClick(View v) {
         int index;
