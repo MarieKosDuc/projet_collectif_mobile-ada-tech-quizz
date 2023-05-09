@@ -33,6 +33,15 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     // method to generate a new questionBank
     private QuestionBank initializeQuestionBank(){
         List<Question> newQuestionList = new ArrayList<Question>();
+        Question initQuestion = new Question("Are you ready to play?",
+                Arrays.asList(
+                        "Yes!",
+                        "No...",
+                        "Well...",
+                        "Not sure..."
+                ), 0);
+        newQuestionList.add(initQuestion);
+
         Question question1 = new Question("Click on 3",
                 Arrays.asList(
                         "0",

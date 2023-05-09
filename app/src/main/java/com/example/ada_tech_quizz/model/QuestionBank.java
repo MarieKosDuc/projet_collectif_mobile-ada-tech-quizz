@@ -1,5 +1,6 @@
 package com.example.ada_tech_quizz.model;
 
+import java.util.Collections;
 import java.util.List;
 
 public class QuestionBank {
@@ -9,6 +10,7 @@ public class QuestionBank {
 
     // This is the constructor
     public QuestionBank(List<Question> questionList) {
+        Collections.shuffle(questionList);
         mQuestionList = questionList;
     }
 
