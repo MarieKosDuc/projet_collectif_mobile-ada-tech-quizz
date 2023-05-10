@@ -64,15 +64,20 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         mQuestionText.setText(question.getQuestion());
         String[] mQuestionList = question.getChoiceList().toArray(new String[0]);
 
-        // display text and answers, initialize buttons color
+        // display text and answers, initialize buttons color and make them clickable
+        // A REFACTORER !!
         mButton1.setText(mQuestionList[0]);
         mButton1.setBackgroundColor(Color.rgb(165, 105, 189));
+        mButton1.setEnabled(true);
         mButton2.setText(mQuestionList[1]);
         mButton2.setBackgroundColor(Color.rgb(165, 105, 189));
+        mButton2.setEnabled(true);
         mButton3.setText(mQuestionList[2]);
         mButton3.setBackgroundColor(Color.rgb(165, 105, 189));
+        mButton3.setEnabled(true);
         mButton4.setText(mQuestionList[3]);
         mButton4.setBackgroundColor(Color.rgb(165, 105, 189));
+        mButton4.setEnabled(true);
     }
 
     // onclick to verify the player's answer and go to the next question if correct
@@ -88,6 +93,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         int index;
 
+        // A REFACTORER avec un switch ?
         if(v == mButton1){
             index = 0;
         } else if(v == mButton2){
@@ -100,18 +106,23 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             throw new IllegalStateException("Unknown clicked view : " + v);
         }
 
-        // set all buttons to red
+        // set all buttons to red and disable them
+        // A REFACTORER !!
         mButton1.setBackgroundColor(Color.rgb(231, 76, 60));
+        mButton1.setEnabled(false);
         mButton2.setBackgroundColor(Color.rgb(231, 76, 60));
+        mButton2.setEnabled(false);
         mButton3.setBackgroundColor(Color.rgb(231, 76, 60));
+        mButton3.setEnabled(false);
         mButton4.setBackgroundColor(Color.rgb(231, 76, 60));
+        mButton4.setEnabled(false);
 
         // set the correct answer to green
 
         buttonsMap.get(mQuestionBank.getCurrentQuestion().getAnswerIndex()).setBackgroundColor(Color.rgb(38, 247, 13));
 
 
-        // do something if answer is rigth
+        // do something if answer is right
         if(index == mQuestionBank.getCurrentQuestion().getAnswerIndex()){
 
             //v.setBackgroundColor(Color.rgb(38, 247, 13));
@@ -134,7 +145,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             public void run() {
                 displayQuestion(mQuestionBank.getCurrentQuestion());
             }
-        }, 2000);
+        }, 4000);
     }
     // method to generate a new questionBank
     private QuestionBank initializeQuestionBank(){
