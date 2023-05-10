@@ -1,13 +1,17 @@
-package com.example.ada_tech_quizz;
+package com.example.ada_tech_quizz.controller;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.example.ada_tech_quizz.R;
+import com.example.ada_tech_quizz.model.User;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,11 +46,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        User mUser = new User();
+
         mPlayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                mUser.setFirstName(mNameEditText.getText().toString());
+                Intent gameActivityIntent = new Intent(MainActivity.this, GameActivity.class);
+                String name =  mUser.getFirstName();
+                gameActivityIntent.putExtra("name_key", name);
+                startActivity(gameActivityIntent);
             }
         });
     }
+
 }
