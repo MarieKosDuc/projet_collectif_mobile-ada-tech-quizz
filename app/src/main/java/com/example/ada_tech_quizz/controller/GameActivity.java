@@ -25,11 +25,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     // initialization of the member variables
     private TextView mQuestionText;
-    private Button mButton1;
-    private Button mButton2;
-    private Button mButton3;
-    private Button mButton4;
+    private Button mButton1, mButton2, mButton3, mButton4;
     private QuestionBank mQuestionBank = initializeQuestionBank();
+
+    private int mScore = 0, mQuestionNumber = 3;
 
 
     @Override
@@ -53,10 +52,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         String name = intent.getStringExtra("name_key");
 
         displayQuestion(mQuestionBank.getCurrentQuestion());
-
     }
-
-
 
     // method to display a question
     private void displayQuestion(final Question question){
@@ -83,6 +79,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     // onclick to verify the player's answer and go to the next question if correct
     @Override
     public void onClick(View v) {
+
+        mQuestionNumber--;
 
         // creation of a hashmap to access the buttons
         Map<Integer, Button> buttonsMap = new HashMap<>();
@@ -121,18 +119,21 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         buttonsMap.get(mQuestionBank.getCurrentQuestion().getAnswerIndex()).setBackgroundColor(Color.rgb(38, 247, 13));
 
-
         // do something if answer is right
         if(index == mQuestionBank.getCurrentQuestion().getAnswerIndex()){
-
+            mScore++;
             //v.setBackgroundColor(Color.rgb(38, 247, 13));
 
-            Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Correct! Score : " + String.valueOf(mScore) + " Questions : " + String.valueOf(mQuestionNumber), Toast.LENGTH_SHORT).show();
 
             // do something if answer is wrong
         } else {
 
-            Toast.makeText(this, "Wrong!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Wrong! Score : " + String.valueOf(mScore) + " Questions : " + String.valueOf(mQuestionNumber), Toast.LENGTH_SHORT).show();
+        }
+
+        if(mQuestionNumber == 0){
+            Toast.makeText(this, "Finish !", Toast.LENGTH_LONG).show();
         }
 
         // increment question index to get to next question
@@ -146,6 +147,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 displayQuestion(mQuestionBank.getCurrentQuestion());
             }
         }, 4000);
+
     }
     // method to generate a new questionBank
     private QuestionBank initializeQuestionBank(){
