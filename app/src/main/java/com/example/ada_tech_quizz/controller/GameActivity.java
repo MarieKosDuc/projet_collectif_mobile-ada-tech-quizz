@@ -57,6 +57,85 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
+
+    // method to display a question
+    private void displayQuestion(final Question question){
+        // get text and answers for the question
+        mQuestionText.setText(question.getQuestion());
+        String[] mQuestionList = question.getChoiceList().toArray(new String[0]);
+
+        // display text and answers, initialize buttons color
+        mButton1.setText(mQuestionList[0]);
+        mButton1.setBackgroundColor(Color.rgb(165, 105, 189));
+        mButton2.setText(mQuestionList[1]);
+        mButton2.setBackgroundColor(Color.rgb(165, 105, 189));
+        mButton3.setText(mQuestionList[2]);
+        mButton3.setBackgroundColor(Color.rgb(165, 105, 189));
+        mButton4.setText(mQuestionList[3]);
+        mButton4.setBackgroundColor(Color.rgb(165, 105, 189));
+    }
+
+    // onclick to verify the player's answer and go to the next question if correct
+    @Override
+    public void onClick(View v) {
+
+        // creation of a hashmap to access the buttons
+        Map<Integer, Button> buttonsMap = new HashMap<>();
+        buttonsMap.put(0, mButton1);
+        buttonsMap.put(1, mButton2);
+        buttonsMap.put(2, mButton3);
+        buttonsMap.put(3, mButton4);
+
+        int index;
+
+        if(v == mButton1){
+            index = 0;
+        } else if(v == mButton2){
+            index = 1;
+        } else if(v == mButton3){
+            index = 2;
+        }else if(v == mButton4){
+            index = 3;
+        } else{
+            throw new IllegalStateException("Unknown clicked view : " + v);
+        }
+
+        // set all buttons to red
+        mButton1.setBackgroundColor(Color.rgb(231, 76, 60));
+        mButton2.setBackgroundColor(Color.rgb(231, 76, 60));
+        mButton3.setBackgroundColor(Color.rgb(231, 76, 60));
+        mButton4.setBackgroundColor(Color.rgb(231, 76, 60));
+
+        // set the correct answer to green
+
+        buttonsMap.get(mQuestionBank.getCurrentQuestion().getAnswerIndex()).setBackgroundColor(Color.rgb(38, 247, 13));
+
+
+        // do something if answer is rigth
+        if(index == mQuestionBank.getCurrentQuestion().getAnswerIndex()){
+
+            //v.setBackgroundColor(Color.rgb(38, 247, 13));
+
+            Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show();
+
+            // do something if answer is wrong
+        } else {
+
+            Toast.makeText(this, "Wrong!", Toast.LENGTH_SHORT).show();
+        }
+
+        // increment question index to get to next question
+        mQuestionBank.getNextQuestion();
+
+        // handler to generate a 2 second delay before displaying next question
+        Handler mHandler = new Handler();
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                displayQuestion(mQuestionBank.getCurrentQuestion());
+            }
+        }, 2000);
+    }
     // method to generate a new questionBank
     private QuestionBank initializeQuestionBank(){
         List<Question> newQuestionList = new ArrayList<Question>();
@@ -977,83 +1056,4 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         return new QuestionBank(newQuestionList);
     };
-
-    // method to display a question
-    private void displayQuestion(final Question question){
-        // get text and answers for the question
-        mQuestionText.setText(question.getQuestion());
-        String[] mQuestionList = question.getChoiceList().toArray(new String[0]);
-
-        // display text and answers, initialize buttons color
-        mButton1.setText(mQuestionList[0]);
-        mButton1.setBackgroundColor(Color.rgb(165, 105, 189));
-        mButton2.setText(mQuestionList[1]);
-        mButton2.setBackgroundColor(Color.rgb(165, 105, 189));
-        mButton3.setText(mQuestionList[2]);
-        mButton3.setBackgroundColor(Color.rgb(165, 105, 189));
-        mButton4.setText(mQuestionList[3]);
-        mButton4.setBackgroundColor(Color.rgb(165, 105, 189));
-    }
-
-    // onclick to verify the player's answer and go to the next question if correct
-    @Override
-    public void onClick(View v) {
-
-        // creation of a hashmap to access the buttons
-        Map<Integer, Button> buttonsMap = new HashMap<>();
-        buttonsMap.put(0, mButton1);
-        buttonsMap.put(1, mButton2);
-        buttonsMap.put(2, mButton3);
-        buttonsMap.put(3, mButton4);
-
-        int index;
-
-        if(v == mButton1){
-            index = 0;
-        } else if(v == mButton2){
-            index = 1;
-        } else if(v == mButton3){
-            index = 2;
-        }else if(v == mButton4){
-            index = 3;
-        } else{
-            throw new IllegalStateException("Unknown clicked view : " + v);
-        }
-
-        // set all buttons to red
-        mButton1.setBackgroundColor(Color.rgb(231, 76, 60));
-        mButton2.setBackgroundColor(Color.rgb(231, 76, 60));
-        mButton3.setBackgroundColor(Color.rgb(231, 76, 60));
-        mButton4.setBackgroundColor(Color.rgb(231, 76, 60));
-
-        // set the correct answer to green
-
-        buttonsMap.get(mQuestionBank.getCurrentQuestion().getAnswerIndex()).setBackgroundColor(Color.rgb(38, 247, 13));
-
-
-        // do something if answer is rigth
-        if(index == mQuestionBank.getCurrentQuestion().getAnswerIndex()){
-
-            //v.setBackgroundColor(Color.rgb(38, 247, 13));
-
-            Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show();
-
-            // do something if answer is wrong
-        } else {
-
-            Toast.makeText(this, "Wrong!", Toast.LENGTH_SHORT).show();
-        }
-
-        // increment question index to get to next question
-        mQuestionBank.getNextQuestion();
-
-        // handler to generate a 2 second delay before displaying next question
-        Handler mHandler = new Handler();
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                displayQuestion(mQuestionBank.getCurrentQuestion());
-            }
-        }, 2000);
-    }
 }
