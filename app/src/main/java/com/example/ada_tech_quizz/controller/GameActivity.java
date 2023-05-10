@@ -3,7 +3,9 @@ package com.example.ada_tech_quizz.controller;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -15,7 +17,9 @@ import com.example.ada_tech_quizz.model.QuestionBank;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -976,18 +980,34 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     // method to display a question
     private void displayQuestion(final Question question){
+        // get text and answers for the question
         mQuestionText.setText(question.getQuestion());
         String[] mQuestionList = question.getChoiceList().toArray(new String[0]);
+
+        // display text and answers, initialize buttons color
         mButton1.setText(mQuestionList[0]);
+        mButton1.setBackgroundColor(Color.rgb(165, 105, 189));
         mButton2.setText(mQuestionList[1]);
+        mButton2.setBackgroundColor(Color.rgb(165, 105, 189));
         mButton3.setText(mQuestionList[2]);
+        mButton3.setBackgroundColor(Color.rgb(165, 105, 189));
         mButton4.setText(mQuestionList[3]);
+        mButton4.setBackgroundColor(Color.rgb(165, 105, 189));
     }
 
     // onclick to verify the player's answer and go to the next question if correct
     @Override
     public void onClick(View v) {
+
+        // creation of a hashmap to access the buttons
+        Map<Integer, Button> buttonsMap = new HashMap<>();
+        buttonsMap.put(0, mButton1);
+        buttonsMap.put(1, mButton2);
+        buttonsMap.put(2, mButton3);
+        buttonsMap.put(3, mButton4);
+
         int index;
+
         if(v == mButton1){
             index = 0;
         } else if(v == mButton2){
@@ -1000,12 +1020,40 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             throw new IllegalStateException("Unknown clicked view : " + v);
         }
 
+        // set all buttons to red
+        mButton1.setBackgroundColor(Color.rgb(231, 76, 60));
+        mButton2.setBackgroundColor(Color.rgb(231, 76, 60));
+        mButton3.setBackgroundColor(Color.rgb(231, 76, 60));
+        mButton4.setBackgroundColor(Color.rgb(231, 76, 60));
+
+        // set the correct answer to green
+
+        buttonsMap.get(mQuestionBank.getCurrentQuestion().getAnswerIndex()).setBackgroundColor(Color.rgb(38, 247, 13));
+
+
+        // do something if answer is rigth
         if(index == mQuestionBank.getCurrentQuestion().getAnswerIndex()){
+
+            //v.setBackgroundColor(Color.rgb(38, 247, 13));
+
             Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show();
-            mQuestionBank.getNextQuestion();
-            displayQuestion(mQuestionBank.getCurrentQuestion());
+
+            // do something if answer is wrong
         } else {
+
             Toast.makeText(this, "Wrong!", Toast.LENGTH_SHORT).show();
         }
+
+        // increment question index to get to next question
+        mQuestionBank.getNextQuestion();
+
+        // handler to generate a 2 second delay before displaying next question
+        Handler mHandler = new Handler();
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                displayQuestion(mQuestionBank.getCurrentQuestion());
+            }
+        }, 2000);
     }
 }
