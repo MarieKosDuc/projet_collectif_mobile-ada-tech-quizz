@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ada_tech_quizz.R;
+import com.example.ada_tech_quizz.model.Player;
 import com.example.ada_tech_quizz.model.Question;
 import com.example.ada_tech_quizz.model.QuestionBank;
 
@@ -28,7 +29,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private Button mButton1, mButton2, mButton3, mButton4;
     private QuestionBank mQuestionBank = initializeQuestionBank();
 
-    private int mScore = 0, mQuestionNumber = 3;
+    private int mScore = 0, mQuestionNumber = 1;
+
+    private Player mPlayer = new Player();
 
 
     @Override
@@ -49,7 +52,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         mButton4.setOnClickListener(this);
 
         Intent intent = getIntent();
-        String name = intent.getStringExtra("name_key");
+        mPlayer.setFirstName(intent.getStringExtra("name_key"));
+
 
         displayQuestion(mQuestionBank.getCurrentQuestion());
     }
@@ -132,15 +136,30 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             Toast.makeText(this, "Wrong! Score : " + String.valueOf(mScore) + " Questions : " + String.valueOf(mQuestionNumber), Toast.LENGTH_SHORT).show();
         }
 
+        // handler to generate a 2 second delay before displaying next question
+        Handler mHandler = new Handler();
+
         if(mQuestionNumber == 0){
             Toast.makeText(this, "Finish !", Toast.LENGTH_LONG).show();
+            mPlayer.setScore(mScore);
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent scoreActivityIntent = new Intent(GameActivity.this, ScoreActivity.class);
+                    String name =  mPlayer.getFirstName();
+                    int score = mScore;
+                    scoreActivityIntent.putExtra("name_key", name);
+                    scoreActivityIntent.putExtra( "score_key", score);
+                    startActivity(scoreActivityIntent);
+                }
+            }, 4000);
+
         }
 
         // increment question index to get to next question
         mQuestionBank.getNextQuestion();
 
-        // handler to generate a 2 second delay before displaying next question
-        Handler mHandler = new Handler();
+
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {

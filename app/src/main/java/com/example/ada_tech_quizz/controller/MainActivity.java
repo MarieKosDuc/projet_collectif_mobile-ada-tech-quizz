@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.ada_tech_quizz.R;
-import com.example.ada_tech_quizz.model.User;
+import com.example.ada_tech_quizz.model.Player;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,14 +46,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        User mUser = new User();
+        Player mPlayer = new Player();
 
         mPlayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mUser.setFirstName(mNameEditText.getText().toString());
+                mPlayer.setFirstName(mNameEditText.getText().toString());
                 Intent gameActivityIntent = new Intent(MainActivity.this, GameActivity.class);
-                String name =  mUser.getFirstName();
+                String name =  mPlayer.getFirstName();
                 gameActivityIntent.putExtra("name_key", name);
                 startActivity(gameActivityIntent);
             }
