@@ -106,18 +106,18 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         // set all buttons to red and disable them
         // A REFACTORER !!
-        mButton1.setBackgroundColor(Color.rgb(231, 76, 60));
+        mButton1.setBackgroundColor(Color.rgb(232, 82, 63));
         mButton1.setEnabled(false);
-        mButton2.setBackgroundColor(Color.rgb(231, 76, 60));
+        mButton2.setBackgroundColor(Color.rgb(232, 82, 63));
         mButton2.setEnabled(false);
-        mButton3.setBackgroundColor(Color.rgb(231, 76, 60));
+        mButton3.setBackgroundColor(Color.rgb(232, 82, 63));
         mButton3.setEnabled(false);
-        mButton4.setBackgroundColor(Color.rgb(231, 76, 60));
+        mButton4.setBackgroundColor(Color.rgb(232, 82, 63));
         mButton4.setEnabled(false);
 
         // set the correct answer to green
 
-        buttonsMap.get(mQuestionBank.getCurrentQuestion().getAnswerIndex()).setBackgroundColor(Color.rgb(38, 247, 13));
+        buttonsMap.get(mQuestionBank.getCurrentQuestion().getAnswerIndex()).setBackgroundColor(Color.rgb(107, 195 , 109));
 
         // do something if answer is right
         if(index == mQuestionBank.getCurrentQuestion().getAnswerIndex()){
