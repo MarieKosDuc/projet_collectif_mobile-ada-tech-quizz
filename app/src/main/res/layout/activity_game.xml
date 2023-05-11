@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="8dp"
-    android:background="@color/pinky"
+    android:background="@color/beige"
     tools:context=".controller.GameActivity">
 
     <TextView
@@ -16,9 +16,8 @@
         android:layout_height="13dp"
         android:layout_margin="8dp"
         android:layout_weight="3"
-        android:background="@color/brown"
         android:gravity="center"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="22sp"
         android:textStyle="bold"
         tools:text="Question?" />
