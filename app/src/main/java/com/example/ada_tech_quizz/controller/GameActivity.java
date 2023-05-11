@@ -127,10 +127,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         // if answer is right: +1 score
         if(index == mQuestionBank.getCurrentQuestion().getAnswerIndex()){
             mScore++;
-            //v.setBackgroundColor(Color.rgb(38, 247, 13));
 
             //Toast.makeText(this, "Correct! Score : " + String.valueOf(mScore) + " Questions : " + String.valueOf(mQuestionNumber), Toast.LENGTH_SHORT).show();
         }
+
         /*else {
 
             Toast.makeText(this, "Wrong! Score : " + String.valueOf(mScore) + " Questions : " + String.valueOf(mQuestionNumber), Toast.LENGTH_SHORT).show();
@@ -158,7 +158,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         } else {
 
-
             // after the last question, set player's score
             mPlayer.setScore(mScore);
 
@@ -176,41 +175,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     startActivity(scoreActivityIntent);
                 }
             }, 4000);
-
         }
-
-
-
-/*
-        if(mQuestionNumber == 0){
-            Toast.makeText(this, "Finish !", Toast.LENGTH_LONG).show();
-            mPlayer.setScore(mScore);
-            mHandler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    Intent scoreActivityIntent = new Intent(GameActivity.this, ScoreActivity.class);
-                    String name =  mPlayer.getFirstName();
-                    int score = mScore;
-                    scoreActivityIntent.putExtra("name_key", name);
-                    scoreActivityIntent.putExtra( "score_key", score);
-                    startActivity(scoreActivityIntent);
-                }
-            }, 4000);
-
-        }
-
-        // increment question index to get to next question
-        mQuestionBank.getNextQuestion();
-
-
-        // after 4 seconds, display next question
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                displayQuestion(mQuestionBank.getCurrentQuestion());
-            }
-        }, 4000);
-        */
     }
 
     // method to generate a new questionBank
