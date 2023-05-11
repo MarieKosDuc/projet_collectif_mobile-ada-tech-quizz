@@ -29,7 +29,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private Button mButton1, mButton2, mButton3, mButton4;
     private QuestionBank mQuestionBank = initializeQuestionBank();
 
-    private int mScore = 0, mQuestionNumber = 1;
+    private int mScore = 0, mQuestionNumber = 5;
 
     private Player mPlayer = new Player();
 
@@ -51,10 +51,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         mButton3.setOnClickListener(this);
         mButton4.setOnClickListener(this);
 
+        // gets the player's name from the intent that launched GameActivity.class
         Intent intent = getIntent();
         mPlayer.setFirstName(intent.getStringExtra("name_key"));
 
-
+        // displays the first question
         displayQuestion(mQuestionBank.getCurrentQuestion());
     }
 
@@ -84,7 +85,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
 
-        mQuestionNumber--;
+        // handler to generate a delay before action
+        Handler mHandler = new Handler();
 
         // creation of a hashmap to access the buttons
         Map<Integer, Button> buttonsMap = new HashMap<>();
@@ -120,25 +122,66 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         mButton4.setEnabled(false);
 
         // set the correct answer to green
-
         buttonsMap.get(mQuestionBank.getCurrentQuestion().getAnswerIndex()).setBackgroundColor(Color.rgb(107, 195 , 109));
 
-        // do something if answer is right
+        // if answer is right: +1 score
         if(index == mQuestionBank.getCurrentQuestion().getAnswerIndex()){
             mScore++;
             //v.setBackgroundColor(Color.rgb(38, 247, 13));
 
-            Toast.makeText(this, "Correct! Score : " + String.valueOf(mScore) + " Questions : " + String.valueOf(mQuestionNumber), Toast.LENGTH_SHORT).show();
-
-            // do something if answer is wrong
-        } else {
+            //Toast.makeText(this, "Correct! Score : " + String.valueOf(mScore) + " Questions : " + String.valueOf(mQuestionNumber), Toast.LENGTH_SHORT).show();
+        }
+        /*else {
 
             Toast.makeText(this, "Wrong! Score : " + String.valueOf(mScore) + " Questions : " + String.valueOf(mQuestionNumber), Toast.LENGTH_SHORT).show();
+        }*/
+
+        // While mQuestionNumber >0, display the next question
+        if (mQuestionNumber > 0){
+
+            Toast.makeText(this, "Remaining questions : " + String.valueOf(mQuestionNumber), Toast.LENGTH_SHORT).show();
+
+            // increment question index to get to next question
+            mQuestionBank.getNextQuestion();
+
+            // after 4 seconds, display next question
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    displayQuestion(mQuestionBank.getCurrentQuestion());
+                }
+            }, 4000);
+
+            // each time a button is clicked, the questions counter decreases
+            mQuestionNumber--;
+            Toast.makeText(this, "Remaining questions after decrease: " + String.valueOf(mQuestionNumber), Toast.LENGTH_SHORT).show();
+
+        } else {
+
+
+            // after the last question, set player's score
+            mPlayer.setScore(mScore);
+
+            // create a 4 seconds delay
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+
+                    // new intent that launches ScoreActivity.class and sends the player's name and score
+                    Intent scoreActivityIntent = new Intent(GameActivity.this, ScoreActivity.class);
+                    String name = mPlayer.getFirstName();
+                    int score = mScore;
+                    scoreActivityIntent.putExtra("name_key", name);
+                    scoreActivityIntent.putExtra("score_key", score);
+                    startActivity(scoreActivityIntent);
+                }
+            }, 4000);
+
         }
 
-        // handler to generate a 2 second delay before displaying next question
-        Handler mHandler = new Handler();
 
+
+/*
         if(mQuestionNumber == 0){
             Toast.makeText(this, "Finish !", Toast.LENGTH_LONG).show();
             mPlayer.setScore(mScore);
@@ -160,14 +203,16 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         mQuestionBank.getNextQuestion();
 
 
+        // after 4 seconds, display next question
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 displayQuestion(mQuestionBank.getCurrentQuestion());
             }
         }, 4000);
-
+        */
     }
+
     // method to generate a new questionBank
     private QuestionBank initializeQuestionBank(){
         List<Question> newQuestionList = new ArrayList<Question>();

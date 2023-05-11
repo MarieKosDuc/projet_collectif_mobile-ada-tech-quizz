@@ -44,10 +44,10 @@
     <Button
         android:id="@+id/score_button_playAgain"
         android:layout_width="194dp"
-        android:layout_height="127dp"
+        android:layout_height="94dp"
         android:layout_gravity="center_horizontal"
         android:layout_margin="16dp"
-        android:textSize="22sp"
-        android:text="REJOUER" />
+        android:text="REJOUER"
+        android:textSize="22sp" />
 
 </LinearLayout>
