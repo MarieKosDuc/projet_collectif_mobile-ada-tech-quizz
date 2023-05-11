@@ -136,10 +136,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             Toast.makeText(this, "Wrong! Score : " + String.valueOf(mScore) + " Questions : " + String.valueOf(mQuestionNumber), Toast.LENGTH_SHORT).show();
         }*/
 
-        // While mQuestionNumber >0, display the next question
-        if (mQuestionNumber > 0){
+        // While there are still remaining questions, display the next question
+        if (mQuestionNumber > 1){
 
-            Toast.makeText(this, "Remaining questions : " + String.valueOf(mQuestionNumber), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Remaining questions : " + String.valueOf(mQuestionNumber), Toast.LENGTH_SHORT).show();
 
             // increment question index to get to next question
             mQuestionBank.getNextQuestion();
@@ -154,7 +154,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
             // each time a button is clicked, the questions counter decreases
             mQuestionNumber--;
-            Toast.makeText(this, "Remaining questions after decrease: " + String.valueOf(mQuestionNumber), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Remaining questions after decrease: " + String.valueOf(mQuestionNumber), Toast.LENGTH_SHORT).show();
 
         } else {
 
