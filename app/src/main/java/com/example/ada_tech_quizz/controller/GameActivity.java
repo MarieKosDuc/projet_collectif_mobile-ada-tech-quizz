@@ -68,16 +68,16 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         // display text and answers, initialize buttons color and make them clickable
         // A REFACTORER !!
         mButton1.setText(mQuestionList[0]);
-        mButton1.setBackgroundColor(Color.rgb(165, 105, 189));
+        mButton1.setBackgroundColor(getResources().getColor(R.color.pink));
         mButton1.setEnabled(true);
         mButton2.setText(mQuestionList[1]);
-        mButton2.setBackgroundColor(Color.rgb(165, 105, 189));
+        mButton2.setBackgroundColor(getResources().getColor(R.color.pink));
         mButton2.setEnabled(true);
         mButton3.setText(mQuestionList[2]);
-        mButton3.setBackgroundColor(Color.rgb(165, 105, 189));
+        mButton3.setBackgroundColor(getResources().getColor(R.color.pink));
         mButton3.setEnabled(true);
         mButton4.setText(mQuestionList[3]);
-        mButton4.setBackgroundColor(Color.rgb(165, 105, 189));
+        mButton4.setBackgroundColor(getResources().getColor(R.color.pink));
         mButton4.setEnabled(true);
     }
 

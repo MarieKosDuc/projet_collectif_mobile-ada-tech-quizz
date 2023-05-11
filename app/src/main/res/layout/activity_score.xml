@@ -19,7 +19,8 @@
         android:padding="8dp"
         android:textSize="40sp"
         android:gravity="center"
-        android:text="Bravo Joueur" />
+        android:text="Bravo Joueur"
+        />
 
     <TextView
         android:id="@+id/score_textview_your_textScore"
@@ -28,9 +29,9 @@
         android:layout_margin="16dp"
         android:padding="8dp"
         android:textSize="22sp"
-
         android:gravity="center"
-        android:text="Ton score est de : " />
+        android:text="Ton score est de : "
+        />
 
     <TextView
         android:id="@+id/score_textview_playerScore"
@@ -39,7 +40,8 @@
         android:layout_margin="16dp"
         android:padding="8dp"
         android:textSize="80sp"
-        android:text="XX" />
+        android:text="XX"
+        />
 
     <Button
         android:id="@+id/score_button_playAgain"
@@ -48,6 +50,8 @@
         android:layout_gravity="center_horizontal"
         android:layout_margin="16dp"
         android:text="REJOUER"
-        android:textSize="22sp" />
+        android:textSize="22sp"
+        android:backgroundTint="@color/pink"
+        />
 
 </LinearLayout>
