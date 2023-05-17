@@ -1,6 +1,7 @@
 package com.example.ada_tech_quizz.controller;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -77,7 +78,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         mButton3.setBackgroundColor(getResources().getColor(R.color.pink));
         mButton3.setEnabled(true);
         mButton4.setText(mQuestionList[3]);
-        mButton4.setBackgroundColor(getResources().getColor(R.color.pink));
+        mButton4.setBackgroundColor(ContextCompat.getColor(this, R.color.pink));
         mButton4.setEnabled(true);
     }
 

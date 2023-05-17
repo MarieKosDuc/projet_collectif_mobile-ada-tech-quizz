@@ -46,6 +46,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_margin="16dp"
         android:backgroundTint="@color/pink"
+        android:enabled="false"
         />
 
 </LinearLayout>
