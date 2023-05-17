@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,6 +28,21 @@ public class MainActivity extends AppCompatActivity {
         mPlayButton = findViewById(R.id.main_button_play);
 
         mPlayButton.setEnabled(false);
+
+        // use Enter button to click on button
+        mNameEditText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+                    if (mPlayButton.isEnabled()) {
+                        mPlayButton.performClick();
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
+
 
         mNameEditText.addTextChangedListener(new TextWatcher() {
             @Override
