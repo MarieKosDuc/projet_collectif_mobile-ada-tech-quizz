@@ -7,12 +7,14 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ada_tech_quizz.R;
+import com.example.ada_tech_quizz.model.DataModel;
 import com.example.ada_tech_quizz.model.Player;
 import com.example.ada_tech_quizz.model.Question;
 import com.example.ada_tech_quizz.model.QuestionBank;
@@ -23,10 +25,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class GameActivity extends AppCompatActivity implements View.OnClickListener{
 
     // initialization of the member variables
-    private TextView mQuestionText;
+    public TextView mQuestionText;
     private Button mButton1, mButton2, mButton3, mButton4;
     private QuestionBank mQuestionBank = initializeQuestionBank();
 
@@ -58,6 +66,49 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         // displays the first question
         displayQuestion(mQuestionBank.getCurrentQuestion());
+
+        //Retrofit Builder
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://192.168.1.146:8085/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        // instance for interface
+        MyAPICal myAPIcal = retrofit.create(MyAPICal.class);
+        Call<DataModel> call = myAPIcal.getData();
+
+        call.enqueue(new Callback<DataModel>() {
+            @Override
+            public void onResponse(Call<DataModel> call, Response<DataModel> response) {
+                // Checking for the response
+
+                if (response.code() != 200){
+                    mQuestionText.setText("Connected but check EndPoint !");
+                    return;
+                }
+
+
+                //Get the data into textview
+                String jsony = "";
+
+                jsony = "id= " + response.body().getId() +
+                        "\n question= " +response.body().getQuestion() +
+                        "\n answer1= " +response.body().getAnswer1() +
+                        "\n answer2= " +response.body().getAnswer2() +
+                        "\n answer3= " +response.body().getAnswer3() +
+                        "\n answer4= " +response.body().getAnswer4() +
+                        "\n correctAnswer" +response.body().getCorrectAnswer();
+                mQuestionText.append(jsony);
+            }
+
+            @Override
+            public void onFailure(Call<DataModel> call, Throwable t) {
+                mQuestionText.setText("API Request Failed: " + t.getMessage());
+            }
+        });
+
+
     }
 
     // method to display a question
