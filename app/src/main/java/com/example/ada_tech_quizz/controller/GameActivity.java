@@ -42,6 +42,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     private Player mPlayer = new Player();
 
+    int correctAnswer;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +69,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         // displays the first question
         displayQuestion(mQuestionBank.getCurrentQuestion());
 
+
         //Retrofit Builder
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -81,32 +84,35 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         call.enqueue(new Callback<DataModel>() {
             @Override
             public void onResponse(Call<DataModel> call, Response<DataModel> response) {
-                // Checking for the response
+                if (response.isSuccessful()) {
+                    // Process the response data
+                    String question = response.body().getQuestion();
+                    mQuestionText.setText(question);
+                    String answer1 = response.body().getAnswer1();
+                    mButton1.setText(answer1);
+                    String answer2 = response.body().getAnswer2();
+                    mButton2.setText(answer2);
+                    String answer3 = response.body().getAnswer3();
+                    mButton3.setText(answer3);
+                    String answer4 = response.body().getAnswer4();
+                    mButton4.setText(answer4);
+                    correctAnswer = response.body().getCorrectAnswer();
 
-                if (response.code() != 200){
-                    mQuestionText.setText("Connected but check EndPoint !");
-                    return;
+                } else {
+                    // Handle unsuccessful response
+                    mQuestionText.setText("API Request Failed: " + response.code());
+
                 }
-
-
-                //Get the data into textview
-                String jsony = "";
-
-                jsony = "id= " + response.body().getId() +
-                        "\n question= " +response.body().getQuestion() +
-                        "\n answer1= " +response.body().getAnswer1() +
-                        "\n answer2= " +response.body().getAnswer2() +
-                        "\n answer3= " +response.body().getAnswer3() +
-                        "\n answer4= " +response.body().getAnswer4() +
-                        "\n correctAnswer" +response.body().getCorrectAnswer();
-                mQuestionText.append(jsony);
             }
 
             @Override
             public void onFailure(Call<DataModel> call, Throwable t) {
                 mQuestionText.setText("API Request Failed: " + t.getMessage());
+                Log.e("API Request Failed", "Error: " + t.getMessage());
             }
         });
+
+
 
 
     }
