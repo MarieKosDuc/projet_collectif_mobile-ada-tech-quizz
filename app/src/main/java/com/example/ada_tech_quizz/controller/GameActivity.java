@@ -73,7 +73,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         //Retrofit Builder
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.146:8085/")
+                .baseUrl("http://192.168.5.139:8085/") // mettre son adresse IP ----ICI-----
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
