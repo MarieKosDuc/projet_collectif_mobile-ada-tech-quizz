@@ -3,10 +3,9 @@ package com.example.ada_tech_quizz.model;
 import java.util.List;
 
 public class Question {
-
-    private final String mQuestion;
-    private final List<String> mChoiceList;
-    private final int mAnswerIndex;
+    private String mQuestion;
+    private List<String> mChoiceList;
+    private int mAnswerIndex;
 
     public Question(String question, List<String> choiceList, int answerIndex) {
         mQuestion = question;
@@ -26,4 +25,5 @@ public class Question {
         return mAnswerIndex;
     }
 }
+
 

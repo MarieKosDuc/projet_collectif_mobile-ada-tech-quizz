@@ -8,7 +8,7 @@ import retrofit2.http.GET;
 public interface MyAPICal {
     //  http://localhost:8085/        questions/1
     //
-    @GET("questions/1")
+    @GET("questions")
     Call<DataModel> getData();
 
 

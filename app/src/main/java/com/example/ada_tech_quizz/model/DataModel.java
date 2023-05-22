@@ -36,7 +36,8 @@ public class DataModel {
         return answer4;
     }
 
-    public int getCorrectAnswer() {
+
+    public int getCorrectAnswerIndex() {
         return correctAnswer;
     }
 }
