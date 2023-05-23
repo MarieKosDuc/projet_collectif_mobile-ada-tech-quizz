@@ -1,7 +1,6 @@
 package com.example.ada_tech_quizz.controller;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -13,52 +12,64 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
 import com.example.ada_tech_quizz.R;
 import com.example.ada_tech_quizz.model.DataModel;
 import com.example.ada_tech_quizz.model.Player;
 import com.example.ada_tech_quizz.model.Question;
 import com.example.ada_tech_quizz.model.QuestionBank;
+import com.example.ada_tech_quizz.model.QuestionsFromJSON;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
+import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Response;
+//import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.gson.reflect.TypeToken;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener{
 
     // initialization of the member variables
     public TextView mQuestionText;
     private Button mButton1, mButton2, mButton3, mButton4;
-    private QuestionBank mQuestionBank = initializeQuestionBank();
-
-    public  List<Question> newQuestionList;
+    public List<Question> mQuestionList;
+    public QuestionBank mQuestionBank;
 
     private int mScore = 0, mQuestionNumber = 5;
 
     private Player mPlayer = new Player();
 
-    int correctAnswer;
+
+    // variables for Volley library
+    private RequestQueue mRequestQueue;
+    private StringRequest mStringRequest;
+    private String url = "http://192.168.6.29:8085/questions";
 
 
+    // ON CREATE: method to initialize the game screen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.i("essaidebug", "OnCreate");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
@@ -69,84 +80,64 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         mButton3 = findViewById(R.id.game_activity_button_3);
         mButton4 = findViewById(R.id.game_activity_button_4);
 
+        //ONCLICK A REMETTRE
+        /*
         mButton1.setOnClickListener(this);
         mButton2.setOnClickListener(this);
         mButton3.setOnClickListener(this);
         mButton4.setOnClickListener(this);
 
+         */
+
         // gets the player's name from the intent that launched GameActivity.class
         Intent intent = getIntent();
         mPlayer.setFirstName(intent.getStringExtra("name_key"));
 
+        getData();
 
-        //Retrofit Builder
+        //set question bank
+        //mQuestionBank = initializeQuestionBank();
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.5.139:8085/") // mettre son adresse IP ----ICI-----
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        // instance for interface
-        MyAPICal myAPIcal = retrofit.create(MyAPICal.class);
-        Call<DataModel> call = myAPIcal.getData();
-
-        call.enqueue(new Callback<DataModel>() {
-            @Override
-            public void onResponse(Call<DataModel> call, Response<DataModel> response) {
-                if (response.isSuccessful()) {
-
-                    Gson gson = new Gson();
-                    JsonElement jsonElement = gson.fromJson(response.body().toString(), JsonElement.class);
-
-// Vérifiez si l'élément JSON est un tableau (dans votre cas, une liste de questions)
-                    if (jsonElement.isJsonArray()) {
-                        JsonArray jsonArray = jsonElement.getAsJsonArray();
-
-                        // Parcourez les éléments du tableau (questions)
-                        for (int i = 0; i < jsonArray.size(); i++) {
-                            JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
-
-                            // Extrayez les valeurs des clés nécessaires
-                            String question = jsonObject.get("question").getAsString();
-                            String answer1 = jsonObject.get("answer1").getAsString();
-                            String answer2 = jsonObject.get("answer2").getAsString();
-                            String answer3 = jsonObject.get("answer3").getAsString();
-                            String answer4 = jsonObject.get("answer4").getAsString();
-                            int correctAnswerIndex = jsonObject.get("correctAnswer").getAsInt();
-
-                            // Créez l'objet Question correspondant et ajoutez-le à votre liste de questions
-                            Question newQuestion = new Question(question,
-                                    Arrays.asList(answer1, answer2, answer3, answer4),
-                                    correctAnswerIndex);
-                            //newQuestionList.add(newQuestion);
-                            getAPIQuestions(newQuestion, newQuestionList);
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<DataModel> call, Throwable t) {
-
-            }
-
-        });
         // displays the first question
-        displayQuestion(mQuestionBank.getCurrentQuestion());
+        //displayQuestion(mQuestionBank.getCurrentQuestion());
 
+        //END OF ONCREATE METHOD
+    }
+
+    private void getData() {
+        // RequestQueue initialized
+        mRequestQueue = Volley.newRequestQueue(this);
+
+        // String Request initialized
+        mStringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                Toast.makeText(getApplicationContext(), "Response :" + response.toString(), Toast.LENGTH_LONG).show();//display the response on screen
+
+                Gson gson = new Gson();
+                Type questionListType = new TypeToken<List<Question>>(){}.getType();
+                List<Question> questionList = gson.fromJson(response, questionListType);
+
+                mQuestionBank = new QuestionBank(questionList);
+
+                mQuestionBank.getCurrentQuestion();
+
+                displayQuestion(mQuestionBank.getCurrentQuestion());
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i(TAG, "Error :" + error.toString());
+            }
+        });
+        mRequestQueue.add(mStringRequest);
     }
 
 
-            private List<Question> getAPIQuestions (Question question, List<Question> qlist){
-        qlist.add(question);
-        return qlist;
-    } ;
-
-            // method to generate a new questionBank
-            private QuestionBank initializeQuestionBank(){
-
-
-                return new QuestionBank(newQuestionList);
+    // method to generate a new questionBank
+    private QuestionBank initializeQuestionBank(){
+        return new QuestionBank(mQuestionList);
             };
 
 
@@ -154,20 +145,19 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private void displayQuestion(final Question question){
         // get text and answers for the question
         mQuestionText.setText(question.getQuestion());
-        String[] mQuestionList = question.getChoiceList().toArray(new String[0]);
 
         // display text and answers, initialize buttons color and make them clickable
         // A REFACTORER !!
-        mButton1.setText(mQuestionList[0]);
+        mButton1.setText(question.getAnswer1());
         mButton1.setBackgroundColor(getResources().getColor(R.color.pink));
         mButton1.setEnabled(true);
-        mButton2.setText(mQuestionList[1]);
+        mButton2.setText(question.getAnswer2());
         mButton2.setBackgroundColor(getResources().getColor(R.color.pink));
         mButton2.setEnabled(true);
-        mButton3.setText(mQuestionList[2]);
+        mButton3.setText(question.getAnswer3());
         mButton3.setBackgroundColor(getResources().getColor(R.color.pink));
         mButton3.setEnabled(true);
-        mButton4.setText(mQuestionList[3]);
+        mButton4.setText(question.getAnswer4());
         mButton4.setBackgroundColor(ContextCompat.getColor(this, R.color.pink));
         mButton4.setEnabled(true);
     }
@@ -213,10 +203,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         mButton4.setEnabled(false);
 
         // set the correct answer to green
-        buttonsMap.get(mQuestionBank.getCurrentQuestion().getAnswerIndex()).setBackgroundColor(Color.rgb(107, 195 , 109));
+        buttonsMap.get(mQuestionBank.getCurrentQuestion().getCorrectAnswer()).setBackgroundColor(Color.rgb(107, 195 , 109));
 
         // if answer is right: +1 score
-        if(index == mQuestionBank.getCurrentQuestion().getAnswerIndex()){
+        if(index == mQuestionBank.getCurrentQuestion().getCorrectAnswer()){
             mScore++;
 
             //Toast.makeText(this, "Correct! Score : " + String.valueOf(mScore) + " Questions : " + String.valueOf(mQuestionNumber), Toast.LENGTH_SHORT).show();
@@ -268,6 +258,4 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             }, 4000);
         }
     }
-
-
 }
