@@ -54,7 +54,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     public List<Question> mQuestionList;
     public QuestionBank mQuestionBank;
 
-    private int mScore = 0, mQuestionNumber = 5;
+    private int mScore = 0, mQuestionNumber = 10;
 
     private Player mPlayer = new Player();
 
@@ -109,7 +109,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onResponse(String response) {
 
-                Toast.makeText(getApplicationContext(), "Response :" + response.toString(), Toast.LENGTH_LONG).show();//display the response on screen
+//                Toast.makeText(getApplicationContext(), "Response :" + response.toString(), Toast.LENGTH_LONG).show();//display the response on screen
 
                 Gson gson = new Gson();
                 Type questionListType = new TypeToken<List<Question>>(){}.getType();
@@ -227,7 +227,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 public void run() {
                     displayQuestion(mQuestionBank.getCurrentQuestion());
                 }
-            }, 4000);
+            }, 3000);
 
             // each time a button is clicked, the questions counter decreases
             mQuestionNumber--;
