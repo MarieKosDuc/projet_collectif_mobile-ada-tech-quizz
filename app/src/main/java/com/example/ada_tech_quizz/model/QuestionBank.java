@@ -5,6 +5,10 @@ import java.util.List;
 
 public class QuestionBank {
 
+    public void setQuestionList(List<Question> questionList) {
+        mQuestionList = questionList;
+    }
+
     private List<Question> mQuestionList;
     private int mNextQuestionIndex = 0;
 

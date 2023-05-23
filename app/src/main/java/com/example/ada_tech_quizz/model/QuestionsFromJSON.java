@@ -2,7 +2,7 @@ package com.example.ada_tech_quizz.model;
 
 import java.util.List;
 
-public class Question {
+public class QuestionsFromJSON {
     private String question, answer1, answer2, answer3, answer4;
     private int id, correctAnswer;
 
@@ -62,9 +62,7 @@ public class Question {
         this.correctAnswer = correctAnswer;
     }
 
-//    public List<String> getAnswers(){
-//        return List.of(answer1, answer2, answer3,answer4);
-//    }
+    public List<String> getAnswers(){
+        return List.of(answer1, answer2, answer3,answer4);
+    }
 }
-
-

@@ -6,12 +6,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.ada_tech_quizz.R;
-import com.example.ada_tech_quizz.model.User;
+import com.example.ada_tech_quizz.model.Player;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,6 +28,21 @@ public class MainActivity extends AppCompatActivity {
         mPlayButton = findViewById(R.id.main_button_play);
 
         mPlayButton.setEnabled(false);
+
+        // use Enter button to click on button
+        mNameEditText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+                    if (mPlayButton.isEnabled()) {
+                        mPlayButton.performClick();
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
+
 
         mNameEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -46,14 +62,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        User mUser = new User();
+        Player mPlayer = new Player();
 
         mPlayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mUser.setFirstName(mNameEditText.getText().toString());
+                mPlayer.setFirstName(mNameEditText.getText().toString());
                 Intent gameActivityIntent = new Intent(MainActivity.this, GameActivity.class);
-                String name =  mUser.getFirstName();
+                String name =  mPlayer.getFirstName();
                 gameActivityIntent.putExtra("name_key", name);
                 startActivity(gameActivityIntent);
             }
