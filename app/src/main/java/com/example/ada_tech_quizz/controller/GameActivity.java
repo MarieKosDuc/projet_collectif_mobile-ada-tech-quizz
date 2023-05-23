@@ -80,14 +80,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         mButton3 = findViewById(R.id.game_activity_button_3);
         mButton4 = findViewById(R.id.game_activity_button_4);
 
-        //ONCLICK A REMETTRE
-        /*
         mButton1.setOnClickListener(this);
         mButton2.setOnClickListener(this);
         mButton3.setOnClickListener(this);
         mButton4.setOnClickListener(this);
-
-         */
 
         // gets the player's name from the intent that launched GameActivity.class
         Intent intent = getIntent();
