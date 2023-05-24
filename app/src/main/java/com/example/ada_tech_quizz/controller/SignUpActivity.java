@@ -51,7 +51,7 @@ public class SignUpActivity extends AppCompatActivity {
     // variables for Volley library
     private RequestQueue mRequestQueue;
     private StringRequest mStringRequest;
-    private String url = "http://192.168.4.104:8085/users";
+    private String url = "http://192.168.4.100:8085/users";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

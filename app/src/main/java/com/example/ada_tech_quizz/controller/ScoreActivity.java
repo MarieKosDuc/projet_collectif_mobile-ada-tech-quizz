@@ -15,7 +15,7 @@ import com.example.ada_tech_quizz.model.Player;
 
 public class ScoreActivity extends AppCompatActivity {
 
-    private TextView mCongratsTextView, mPlayerScoreTextView;
+    private TextView mCongratsTextView, mPlayerScoreTextView,mPlayerBestScoreTextView,mPlayerTotalScoreTextView;
 
     private Button mPlayAgainButton;
 
@@ -29,6 +29,8 @@ public class ScoreActivity extends AppCompatActivity {
 
         mCongratsTextView = findViewById(R.id.score_textview_congrats);
         mPlayerScoreTextView = findViewById(R.id.score_textview_playerScore);
+        mPlayerBestScoreTextView = findViewById(R.id.score_textview_playerBestScore);
+        mPlayerTotalScoreTextView = findViewById(R.id.score_textview_playerTotalScore);
         mPlayAgainButton = findViewById(R.id.score_button_playAgain);
 
         // getting the player's name and score from the previous activity (which launched the intent)
@@ -42,6 +44,8 @@ public class ScoreActivity extends AppCompatActivity {
         // Displays the player's name and score
         mCongratsTextView.setText("BRAVO " + mPlayer.getFirstName());
         mPlayerScoreTextView.setText(Integer.toString(mPlayer.getScore()) + "/10");
+        mPlayerBestScoreTextView.setText(Integer.toString(mPlayer.getScore()) + "/10");
+        mPlayerTotalScoreTextView.setText("X"+ "/" + "X");
 
 
         // On click on "play again": restart the game (from GameActivity.class)

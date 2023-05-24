@@ -54,7 +54,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     public List<Question> mQuestionList;
     public QuestionBank mQuestionBank;
 
-    private int mScore = 0, mQuestionNumber = 10;
+    private int mScore = 0, mQuestionNumber = 2, mTotalScore;
 
     private Player mPlayer = new Player();
 
@@ -62,7 +62,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     // variables for Volley library
     private RequestQueue mRequestQueue;
     private StringRequest mStringRequest;
-    private String url = "http://192.168.4.104:8085/questions";
+    private String url = "http://192.168.4.100:8085/questions";
 
 
     // ON CREATE: method to initialize the game screen
@@ -250,6 +250,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     scoreActivityIntent.putExtra("name_key", name);
                     scoreActivityIntent.putExtra("score_key", score);
                     startActivity(scoreActivityIntent);
+
                 }
             }, 4000);
         }

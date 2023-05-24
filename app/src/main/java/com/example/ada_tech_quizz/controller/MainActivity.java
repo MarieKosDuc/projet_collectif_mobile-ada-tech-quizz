@@ -70,8 +70,16 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 mPlayer.setFirstName(mNameEditText.getText().toString());
                 Intent gameActivityIntent = new Intent(MainActivity.this, GameActivity.class);
-                String name =  mPlayer.getFirstName();
+                String name =  "toto";
+                String email = "toto@mail.com";
+                int bestScore = 0;
+                int totalQuestions = 0;
+                int totalPoints = 0;
                 gameActivityIntent.putExtra("name_key", name);
+                gameActivityIntent.putExtra("email_key", email);
+                gameActivityIntent.putExtra("bestScore_key", bestScore);
+                gameActivityIntent.putExtra("totalQuestions_key", totalQuestions);
+                gameActivityIntent.putExtra("totalPoints_key", totalPoints);
                 startActivity(gameActivityIntent);
             }
         });
