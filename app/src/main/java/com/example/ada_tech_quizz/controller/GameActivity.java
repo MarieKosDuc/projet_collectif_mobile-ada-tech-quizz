@@ -62,7 +62,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     // variables for Volley library
     private RequestQueue mRequestQueue;
     private StringRequest mStringRequest;
-    private String url = "http://192.168.6.29:8085/questions";
+    private String url = "http://192.168.4.104:8085/questions";
 
 
     // ON CREATE: method to initialize the game screen
