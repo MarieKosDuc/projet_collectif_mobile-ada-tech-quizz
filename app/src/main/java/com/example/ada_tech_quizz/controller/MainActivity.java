@@ -17,7 +17,7 @@ import com.example.ada_tech_quizz.model.Player;
 public class MainActivity extends AppCompatActivity {
 
     private EditText mNameEditText;
-    private Button mPlayButton;
+    private Button mPlayButton, mSignUpButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
         mNameEditText = findViewById(R.id.main_edittext_name);
         mPlayButton = findViewById(R.id.main_button_play);
+        mSignUpButton = findViewById(R.id.main_button_sign_up);
 
         mPlayButton.setEnabled(false);
 
@@ -72,6 +73,14 @@ public class MainActivity extends AppCompatActivity {
                 String name =  mPlayer.getFirstName();
                 gameActivityIntent.putExtra("name_key", name);
                 startActivity(gameActivityIntent);
+            }
+        });
+
+        mSignUpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent signUpActivityIntent = new Intent(MainActivity.this, SignUpActivity.class);
+                startActivity(signUpActivityIntent);
             }
         });
     }
