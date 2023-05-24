@@ -221,7 +221,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             // increment question index to get to next question
             mQuestionBank.getNextQuestion();
 
-            // after 4 seconds, display next question
+            // after 3 seconds, display next question
             mHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
