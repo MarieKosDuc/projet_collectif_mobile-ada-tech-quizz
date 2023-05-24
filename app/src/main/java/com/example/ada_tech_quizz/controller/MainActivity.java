@@ -8,6 +8,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,10 +36,12 @@ public class MainActivity extends AppCompatActivity {
     private EditText mEmailEditText, mPasswordEditText;
     private Button mPlayButton, mSignUpButton;
 
+    public TextView mMessageTextView;
+
     // variables for Volley library
     private RequestQueue mRequestQueue;
     private StringRequest mStringRequest;
-    private String url = "http://192.168.7.136:8085/login";
+    private String url = "http://192.168.6.29:8085/login";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +52,9 @@ public class MainActivity extends AppCompatActivity {
         mPasswordEditText = findViewById(R.id.main_edittext_password);
         mPlayButton = findViewById(R.id.main_button_play);
         mSignUpButton = findViewById(R.id.main_button_sign_up);
+        mMessageTextView = findViewById(R.id.main_textview_response);
+
+        //mMessageTextView.setText("toto");
 
         // use Enter button to click on button
         mPlayButton.setOnKeyListener(new View.OnKeyListener() {
@@ -67,7 +73,13 @@ public class MainActivity extends AppCompatActivity {
         mPlayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkDataEntered();
+                if (checkDataEntered()){
+                    try {
+                        sendData();
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                };
             }
         });
 
@@ -113,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
             mStringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
+                    mMessageTextView.setText(response.toString());
                     Log.i("VOLLEY", response);
                 }
             }, new Response.ErrorListener() {
@@ -141,7 +154,6 @@ public class MainActivity extends AppCompatActivity {
                     String responseString = "";
                     if (response != null) {
                         responseString = String.valueOf(response.statusCode);
-                        Toast.makeText(MainActivity.this, response.toString(), Toast.LENGTH_SHORT).show();
                         }
                         // can get more details such as response.headers
                     return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
