@@ -14,6 +14,37 @@ public class Player {
     }
 
     private int mScore;
+    private int mBestScore;
+    private int mTotalScore;
+    private int mTotalQuestions;
+
+
+
+    public int getTotalQuestions() {
+        return mTotalQuestions;
+    }
+
+    public void setTotalQuestions(int totalQuestions) {
+        mTotalQuestions = totalQuestions;
+    }
+
+
+    public int getTotalScore() {
+        return mTotalScore;
+    }
+
+    public void setTotalScore(int totalScore) {
+        mTotalScore = totalScore;
+    }
+
+    public int getBestScore() {
+        return mBestScore;
+    }
+
+    public void setBestScore(int bestScore) {
+        mBestScore = bestScore;
+    }
+
 
     public int getScore() {
         return mScore;

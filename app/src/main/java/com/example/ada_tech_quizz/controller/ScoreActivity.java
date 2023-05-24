@@ -44,8 +44,8 @@ public class ScoreActivity extends AppCompatActivity {
         // Displays the player's name and score
         mCongratsTextView.setText("BRAVO " + mPlayer.getFirstName());
         mPlayerScoreTextView.setText(Integer.toString(mPlayer.getScore()) + "/10");
-        mPlayerBestScoreTextView.setText(Integer.toString(mPlayer.getScore()) + "/10");
-        mPlayerTotalScoreTextView.setText("X"+ "/" + "X");
+        mPlayerBestScoreTextView.setText(Integer.toString(mPlayer.getBestScore()) + "/10");
+        mPlayerTotalScoreTextView.setText(Integer.toString(mPlayer.getTotalScore())+ "/" + Integer.toString(mPlayer.getTotalQuestions()) );
 
 
         // On click on "play again": restart the game (from GameActivity.class)
