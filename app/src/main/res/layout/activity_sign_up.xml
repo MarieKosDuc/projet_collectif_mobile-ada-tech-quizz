@@ -79,7 +79,7 @@
         />
 
     <Button
-        android:id="@+id/main_button_play"
+        android:id="@+id/signup_button_OK"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="C'est parti !"
@@ -87,7 +87,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_margin="16dp"
         android:backgroundTint="@color/pink"
-        android:enabled="false"
+        android:enabled="true"
         />
 
 </LinearLayout>

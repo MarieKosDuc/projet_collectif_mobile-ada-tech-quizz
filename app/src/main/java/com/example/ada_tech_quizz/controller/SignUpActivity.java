@@ -4,19 +4,24 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Patterns;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ada_tech_quizz.R;
 
 public class SignUpActivity extends AppCompatActivity {
     private EditText mNameEditText, mEmailEditText, mPasswordEditText1, mPasswordEditText2;
-    private TextView mErrorPaswword;
+    private TextView mErrorText;
     private Button mOKButton;
+
+    public String mName, mEmail, mPassword1, mPassword2;
 
     private int mFieldsCounter = 0;
 
@@ -29,11 +34,10 @@ public class SignUpActivity extends AppCompatActivity {
         mEmailEditText = findViewById(R.id.signup_edittext_email);
         mPasswordEditText1 = findViewById(R.id.signup_edittext_password1);
         mPasswordEditText2 = findViewById(R.id.signup_edittext_password2);
-        mErrorPaswword = findViewById(R.id.signup_textview_password_error);
+        mErrorText = findViewById(R.id.signup_textview_password_error);
 
+        mOKButton = findViewById(R.id.signup_button_OK);
 
-// A l'initialisation, le bouton OK est grisé
-        mOKButton.setEnabled(false);
 
         // use Enter key on keyboard to use OK button
         mNameEditText.setOnKeyListener(new View.OnKeyListener() {
@@ -49,98 +53,47 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
-
-    // OK button actif seulement si tous les champs ont été remplis et si les deux MdP coïncident
-
-        // vérification que le joueur a saisi son nom
-        mNameEditText.addTextChangedListener(new TextWatcher() {
+        mOKButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                mFieldsCounter ++;
-
-            }
-        });
-
-        // vérification que le joueur a saisi son email
-        mEmailEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                mFieldsCounter ++;
-
-            }
-        });
-
-        // vérification que le joueur a saisi son mdp
-        mPasswordEditText1.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                mFieldsCounter ++;
-
-            }
-        });
-
-        // vérification que le joueur a saisi une deuxième fois son MdP et qu'ils coïncident
-        mPasswordEditText2.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                //Vérification de la concordance des deux MdP
-                String password1 = mPasswordEditText1.getText().toString();
-                String password2 = mPasswordEditText2.getText().toString();
-
-                mFieldsCounter ++;
-
-                // si tous les champs sont remplis et que les MdP coïncident, OK button actif
-                if(mFieldsCounter == 4 && password1.equals(password2)){
-                    mOKButton.setEnabled(true);
+            public void onClick(View v) {
+                if (checkDataEntered()){
+                    Toast.makeText(getApplicationContext(), "All ok :" + checkDataEntered(), Toast.LENGTH_LONG).show();
                 }
-
             }
         });
+    }
 
+    private boolean checkDataEntered(){
+        boolean allFieldsOK = false;
+        if (isEmpty(mNameEditText) || isEmpty(mEmailEditText) || isEmpty(mPasswordEditText1) || isEmpty(mPasswordEditText2)) {
+            mErrorText.setText("Tous les champs sont obligatoires");
+        } else if (!isEmail(mEmailEditText)) {
+            mErrorText.setText("email invalide");
+        } else if (!checkPasswords(mPasswordEditText1, mPasswordEditText2)){
+            mErrorText.setText("Les deux mots de passe doivent être identiques");
+        } else {
+            allFieldsOK = true;
+        }
+    return allFieldsOK;
+    }
 
+    // checking if a field is empty
+    boolean isEmpty(EditText text){
+        CharSequence str = text.getText().toString();
+        return TextUtils.isEmpty(str);
+    }
 
+    // checking if email is a valid email
+    boolean isEmail(EditText text){
+        CharSequence email = text.getText().toString();
+        return(!TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches());
+    }
 
+    // checking if both passwords are the same
+    boolean checkPasswords(EditText pwd1, EditText pwd2){
+        CharSequence password1 = pwd1.getText().toString();
+        CharSequence password2 = pwd2.getText().toString();
 
-
+        return(password1.equals(password2));
     }
 }
