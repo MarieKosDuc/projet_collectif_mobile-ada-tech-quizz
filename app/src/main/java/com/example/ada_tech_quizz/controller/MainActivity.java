@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
     // variables for Volley library
     private RequestQueue mRequestQueue;
-    private String url = "http://172.17.0.1:8085/login";
+    private String url = "http://192.168.6.29:8085/login";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

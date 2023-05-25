@@ -33,12 +33,18 @@ public class ScoreActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Player mPlayer = new Player(intent.getIntExtra("id_key",0),intent.getStringExtra("name_key"), intent.getIntExtra("bestScore_key",0), intent.getIntExtra("totalQuestions_key",0),intent.getIntExtra("totalPoints_key",0), intent.getIntExtra("score_key",0));
 
+        // Setting the total points for the player
+        mPlayer.setTotalPoints(mPlayer.getTotalPoints() + intent.getIntExtra("score_key",0));
+
+        // Setting the total questions played for the player
+        mPlayer.setTotalQuestions(mPlayer.getTotalQuestions() + intent.getIntExtra("totalQuestionsSeries_key",0));
+
         //Toast.makeText(this, mPlayer.getFirstName() + mPlayer.getScore(), Toast.LENGTH_LONG).show() ;
 
         // Displays the player's name and score
         mCongratsTextView.setText("BRAVO " + mPlayer.getName());
-        mPlayerScoreTextView.setText(Integer.toString(intent.getIntExtra("score_key",0)) + "/10");
-        mPlayerBestScoreTextView.setText(Integer.toString(mPlayer.getBestScore()) + "/10");
+        mPlayerScoreTextView.setText(Integer.toString(intent.getIntExtra("score_key",0)) + "/" + intent.getIntExtra("totalQuestionsSeries_key", 0));
+        mPlayerBestScoreTextView.setText(Integer.toString(mPlayer.getBestScore()) + "/" + intent.getIntExtra("totalQuestionsSeries_key", 0));
         mPlayerTotalScoreTextView.setText(Integer.toString(mPlayer.getTotalPoints())+ "/" + Integer.toString(mPlayer.getTotalQuestions()) );
 
 
