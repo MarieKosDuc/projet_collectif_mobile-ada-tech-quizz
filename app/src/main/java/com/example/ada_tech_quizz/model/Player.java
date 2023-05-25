@@ -38,6 +38,8 @@ public class Player {
         mTotalScore = totalScore;
     }
 
+
+
     public int getBestScore() {
         return mBestScore;
     }
@@ -47,6 +49,7 @@ public class Player {
     }
 
 
+
     public int getScore() {
         return mScore;
     }
@@ -54,6 +57,9 @@ public class Player {
     public void setScore(int score) {
         mScore = score;
     }
+
+
+
 
     public String getFirstName() {
         return mFirstName;

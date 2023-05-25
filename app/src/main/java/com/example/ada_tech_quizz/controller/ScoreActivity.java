@@ -38,6 +38,8 @@ public class ScoreActivity extends AppCompatActivity {
         mPlayer.setFirstName(intent.getStringExtra("name_key"));
         mPlayer.setScore(intent.getIntExtra("score_key",0));
         mPlayer.setBestScore(intent.getIntExtra("bestScore_key", 0));
+        mPlayer.setTotalQuestions(intent.getIntExtra("totalQuestions_key", 0));
+        mPlayer.setTotalScore(intent.getIntExtra("totalPoints_key",0));
 
 
         //Toast.makeText(this, mPlayer.getFirstName() + mPlayer.getScore(), Toast.LENGTH_LONG).show() ;

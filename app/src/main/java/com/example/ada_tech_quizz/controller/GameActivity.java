@@ -89,7 +89,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         Intent intent = getIntent();
         mPlayer.setFirstName(intent.getStringExtra("name_key"));
         mPlayer.setBestScore(intent.getIntExtra("bestScore_key", 0));
-        int val = mPlayer.getBestScore();
+        mPlayer.setTotalQuestions(intent.getIntExtra("totalQuestions_key", 0));
+        mPlayer.setTotalScore(intent.getIntExtra("totalPoints_key",0));
+        int val = mPlayer.getTotalScore();
         Toast.makeText(GameActivity.this, "Best Score: " + val, Toast.LENGTH_SHORT).show();
 
 
@@ -252,12 +254,16 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     // new intent that launches ScoreActivity.class and sends the player's name and score
                     Intent scoreActivityIntent = new Intent(GameActivity.this, ScoreActivity.class);
                     String name = mPlayer.getFirstName();
-
                     int bestScore = mPlayer.getBestScore();
+                    int totalQuestions = mPlayer.getTotalQuestions();
+                    int totalPoints = mPlayer.getTotalScore();
                     int score = mScore;
                     scoreActivityIntent.putExtra("name_key", name);
                     scoreActivityIntent.putExtra("score_key", score);
                     scoreActivityIntent.putExtra("bestScore_key", bestScore);
+                    scoreActivityIntent.putExtra("totalQuestions_key", totalQuestions);
+                    scoreActivityIntent.putExtra("totalPoints_key", totalPoints);
+
                     startActivity(scoreActivityIntent);
 
                 }
