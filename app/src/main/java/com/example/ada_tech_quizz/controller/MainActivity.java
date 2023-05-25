@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent gameActivityIntent = new Intent(MainActivity.this, GameActivity.class);
                 String name =  "JEREMY";
                 String email = "toto@mail.com";
-                int bestScore = 5;
+                int bestScore = 2;
                 int totalQuestions = 20;
                 int totalPoints = 15;
                 gameActivityIntent.putExtra("name_key", name);

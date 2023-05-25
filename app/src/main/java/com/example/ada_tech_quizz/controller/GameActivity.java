@@ -54,7 +54,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     public List<Question> mQuestionList;
     public QuestionBank mQuestionBank;
 
-    private int mScore = 0, mQuestionNumber = 2;
+    private int mScore = 0, mQuestionNumber = 5;
 
     private Player mPlayer = new Player();
 
