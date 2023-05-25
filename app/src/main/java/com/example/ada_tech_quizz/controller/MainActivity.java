@@ -140,12 +140,11 @@ public class MainActivity extends AppCompatActivity {
                         //int bestScore = 2;
                         //int totalQuestions = 20;
                         //int totalPoints = 15;
-                        gameActivityIntent.putExtra("name_key", mPlayer.getFirstName());
-                        gameActivityIntent.putExtra("email_key", mPlayer.getEmail());
+                        gameActivityIntent.putExtra("name_key", mPlayer.getName());
                         gameActivityIntent.putExtra("bestScore_key", mPlayer.getBestScore());
                         gameActivityIntent.putExtra("totalQuestions_key", mPlayer.getTotalQuestions());
-                        gameActivityIntent.putExtra("totalPoints_key", mPlayer.getTotalScore());
-                        gameActivityIntent.putExtra("ID_key", mPlayer.getID());
+                        gameActivityIntent.putExtra("totalPoints_key", mPlayer.getTotalPoints());
+                        gameActivityIntent.putExtra("ID_key", mPlayer.getId());
                         startActivity(gameActivityIntent);
                     }
                 }, new Response.ErrorListener() {

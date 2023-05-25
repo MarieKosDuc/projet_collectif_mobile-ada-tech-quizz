@@ -10,33 +10,22 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.example.ada_tech_quizz.R;
-import com.example.ada_tech_quizz.model.DataModel;
 import com.example.ada_tech_quizz.model.Player;
 import com.example.ada_tech_quizz.model.Question;
 import com.example.ada_tech_quizz.model.QuestionBank;
-import com.example.ada_tech_quizz.model.QuestionsFromJSON;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 
 import java.lang.reflect.Type;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import retrofit2.Call;
-import retrofit2.Callback;
 //import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -56,9 +45,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     private int mScore = 0, mQuestionNumber = 5;
 
-    private Player mPlayer = new Player();
-
-
+    public Player mPlayer;
     // variables for Volley library
     private RequestQueue mRequestQueue;
     private StringRequest mStringRequest;
@@ -87,13 +74,16 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         // gets the player's name from the intent that launched GameActivity.class
         Intent intent = getIntent();
-        mPlayer.setFirstName(intent.getStringExtra("name_key"));
-        mPlayer.setBestScore(intent.getIntExtra("bestScore_key", 0));
-        mPlayer.setTotalQuestions(intent.getIntExtra("totalQuestions_key", 0));
-        mPlayer.setTotalScore(intent.getIntExtra("totalPoints_key",0));
+        mPlayer = new Player(intent.getIntExtra("id_key",0),intent.getStringExtra("name_key"), intent.getIntExtra("bestScore_key",0), intent.getIntExtra("totalQuestions_key",0),intent.getIntExtra("totalPoints_key",0),0);
 
-        int value = mPlayer.getTotalScore();
-        Toast.makeText(GameActivity.this, "Best Score: " + value, Toast.LENGTH_SHORT).show();
+
+        //mPlayer.setFirstName(intent.getStringExtra("name_key"));
+        //mPlayer.setBestScore(intent.getIntExtra("bestScore_key", 0));
+        //mPlayer.setTotalQuestions(intent.getIntExtra("totalQuestions_key", 0));
+        //mPlayer.setTotalScore(intent.getIntExtra("totalPoints_key",0));
+
+        //int value = mPlayer.getTotalScore();
+        //Toast.makeText(GameActivity.this, "Best Score: " + value, Toast.LENGTH_SHORT).show();
 
 
 
@@ -259,10 +249,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
                     // new intent that launches ScoreActivity.class and sends the player's name and score
                     Intent scoreActivityIntent = new Intent(GameActivity.this, ScoreActivity.class);
-                    String name = mPlayer.getFirstName();
+                    String name = mPlayer.getName();
                     int bestScore = mPlayer.getBestScore();
                     int totalQuestions = mPlayer.getTotalQuestions();
-                    int totalPoints = mPlayer.getTotalScore();
+                    int totalPoints = mPlayer.getTotalPoints();
                     int score = mScore;
                     scoreActivityIntent.putExtra("name_key", name);
                     scoreActivityIntent.putExtra("score_key", score);

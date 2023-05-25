@@ -1,80 +1,68 @@
 package com.example.ada_tech_quizz.model;
 
 public class Player {
-    private String mFirstName;
-    private String mEmail;
-    private String mPassword;
+
+    private int id;
+    private String name;
     private int bestScore;
+    private int totalQuestions;
+    private int totalPoints;
 
-    public String getEmail() {
-        return mEmail;
+    private int score = 0;
+
+    public Player(int id, String name, int bestScore, int totalQuestions, int totalPoints, int score) {
+        this.id = id;
+        this.name = name;
+        this.bestScore = bestScore;
+        this.totalQuestions = totalQuestions;
+        this.totalPoints = totalPoints;
     }
 
-    public String getPassword() {
-        return mPassword;
+    public int getId() {
+        return id;
     }
 
-    private int mScore;
-    private int mBestScore;
-    private int mTotalScore;
-    private int mTotalQuestions;
-
-    private int mID;
-
-    public int getID() {
-        return mID;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setID(int ID) {
-        mID = ID;
+    public String getName() {
+        return name;
     }
 
-
-    public int getTotalQuestions() {
-        return mTotalQuestions;
+    public void setName(String name) {
+        this.name = name;
     }
-
-    public void setTotalQuestions(int totalQuestions) {
-        mTotalQuestions = totalQuestions;
-    }
-
-
-    public int getTotalScore() {
-        return mTotalScore;
-    }
-
-    public void setTotalScore(int totalScore) {
-        mTotalScore = totalScore;
-    }
-
-
 
     public int getBestScore() {
-        return mBestScore;
+        return bestScore;
     }
 
     public void setBestScore(int bestScore) {
-        mBestScore = bestScore;
+        this.bestScore = bestScore;
     }
 
+    public int getTotalQuestions() {
+        return totalQuestions;
+    }
 
+    public void setTotalQuestions(int totalQuestions) {
+        this.totalQuestions = totalQuestions;
+    }
+
+    public int getTotalPoints() {
+        return totalPoints;
+    }
+
+    public void setTotalPoints(int totalPoints) {
+        this.totalPoints = totalPoints;
+    }
 
     public int getScore() {
-        return mScore;
+        return score;
     }
 
     public void setScore(int score) {
-        mScore = score;
-    }
-
-
-
-
-    public String getFirstName() {
-        return mFirstName;
-    }
-
-    public void setFirstName(String firstName) {
-        mFirstName = firstName;
+        this.score = score;
     }
 }
