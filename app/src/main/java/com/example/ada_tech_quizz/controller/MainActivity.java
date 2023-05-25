@@ -128,8 +128,9 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        mMessageTextView.setText("Response: " + response.toString());
-                        // RECUPERER LA REPONSE POUR CREER LES INTENT
+                        //mMessageTextView.setText("Response: " + response.toString());
+
+                        // Creating a Player object from JSON response
                         Gson gson = new GsonBuilder().create();
                         final Player mPlayer = gson.fromJson(String.valueOf(response),Player.class);
 
@@ -137,11 +138,6 @@ public class MainActivity extends AppCompatActivity {
 
 
                         Intent gameActivityIntent = new Intent(MainActivity.this, GameActivity.class);
-                        //String name =  "JEREMY";
-                        //String email = "toto@mail.com";
-                        //int bestScore = 2;
-                        //int totalQuestions = 20;
-                        //int totalPoints = 15;
                         gameActivityIntent.putExtra("name_key", mPlayer.getName());
                         gameActivityIntent.putExtra("bestScore_key", mPlayer.getBestScore());
                         gameActivityIntent.putExtra("totalQuestions_key", mPlayer.getTotalQuestions());
