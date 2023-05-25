@@ -14,33 +14,67 @@
     <TextView
         android:id="@+id/score_textview_congrats"
         android:layout_width="wrap_content"
-        android:layout_height="110dp"
+        android:layout_height="161dp"
         android:layout_margin="16dp"
-        android:padding="8dp"
-        android:textSize="40sp"
+        android:layout_weight="0"
         android:gravity="center"
-        android:text="Bravo Joueur"
-        />
+        android:text="BRAVO JEREMY"
+        android:lineSpacingExtra="8dp"
+        android:textSize="52sp" />
 
     <TextView
         android:id="@+id/score_textview_your_textScore"
         android:layout_width="wrap_content"
         android:layout_height="93dp"
-        android:layout_margin="16dp"
-        android:padding="8dp"
-        android:textSize="22sp"
+        android:layout_weight="1"
         android:gravity="center"
         android:text="Ton score est de : "
-        />
+        android:textSize="22sp" />
 
     <TextView
         android:id="@+id/score_textview_playerScore"
         android:layout_width="wrap_content"
         android:layout_height="127dp"
-        android:layout_margin="16dp"
-        android:padding="8dp"
         android:textSize="80sp"
         android:text="XX"
+        android:layout_weight="1"
+        />
+
+    <TextView
+        android:id="@+id/score_textview_your_textBestScore"
+        android:layout_width="wrap_content"
+        android:layout_height="93dp"
+        android:textSize="22sp"
+        android:gravity="center"
+        android:text="Ton Meilleur score est de : "
+        android:layout_weight="1"
+        />
+
+    <TextView
+        android:id="@+id/score_textview_playerBestScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="XX"
+        android:textSize="80sp" />
+
+    <TextView
+        android:id="@+id/score_textview_your_textTotalScore"
+        android:layout_width="wrap_content"
+        android:layout_height="93dp"
+
+        android:textSize="22sp"
+        android:gravity="center"
+        android:text="Ton score Total est de : "
+        android:layout_weight="1"
+        />
+
+    <TextView
+        android:id="@+id/score_textview_playerTotalScore"
+        android:layout_width="wrap_content"
+        android:layout_height="127dp"
+        android:textSize="80sp"
+        android:text="XX"
+        android:layout_weight="1"
         />
 
     <Button

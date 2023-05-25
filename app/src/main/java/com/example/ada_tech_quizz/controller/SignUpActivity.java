@@ -1,15 +1,9 @@
 package com.example.ada_tech_quizz.controller;
 
-import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
-
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.KeyEvent;
@@ -18,6 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
@@ -29,19 +25,12 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.ada_tech_quizz.model.Question;
-import com.example.ada_tech_quizz.model.QuestionBank;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
 import com.example.ada_tech_quizz.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Type;
-import java.util.List;
 
 public class SignUpActivity extends AppCompatActivity {
     private EditText mNameEditText, mEmailEditText, mPasswordEditText1, mPasswordEditText2;
