@@ -14,23 +14,21 @@
     <TextView
         android:id="@+id/score_textview_congrats"
         android:layout_width="wrap_content"
-        android:layout_height="110dp"
+        android:layout_height="161dp"
         android:layout_margin="16dp"
-        android:textSize="40sp"
+        android:layout_weight="0"
         android:gravity="center"
         android:text="Bravo Joueur"
-        android:layout_weight="1"
-        />
+        android:textSize="48sp" />
 
     <TextView
         android:id="@+id/score_textview_your_textScore"
         android:layout_width="wrap_content"
         android:layout_height="93dp"
-        android:textSize="22sp"
+        android:layout_weight="1"
         android:gravity="center"
         android:text="Ton score est de : "
-        android:layout_weight="1"
-        />
+        android:textSize="22sp" />
 
     <TextView
         android:id="@+id/score_textview_playerScore"

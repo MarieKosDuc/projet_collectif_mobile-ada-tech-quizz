@@ -54,7 +54,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     public List<Question> mQuestionList;
     public QuestionBank mQuestionBank;
 
-    private int mScore = 0, mQuestionNumber = 2, mTotalScore;
+    private int mScore = 0, mQuestionNumber = 2;
 
     private Player mPlayer = new Player();
 
@@ -91,8 +91,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         mPlayer.setBestScore(intent.getIntExtra("bestScore_key", 0));
         mPlayer.setTotalQuestions(intent.getIntExtra("totalQuestions_key", 0));
         mPlayer.setTotalScore(intent.getIntExtra("totalPoints_key",0));
-        int val = mPlayer.getTotalScore();
-        Toast.makeText(GameActivity.this, "Best Score: " + val, Toast.LENGTH_SHORT).show();
+
+        int value = mPlayer.getTotalScore();
+        Toast.makeText(GameActivity.this, "Best Score: " + value, Toast.LENGTH_SHORT).show();
 
 
 
@@ -245,6 +246,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
             // after the last question, set player's score
             mPlayer.setScore(mScore);
+
+            // vérifiez si le score obtenu est supérieur au bestScore actuel
+            if (mScore > mPlayer.getBestScore()) {
+                mPlayer.setBestScore(mScore);
+            }
 
             // create a 4 seconds delay
             mHandler.postDelayed(new Runnable() {
