@@ -27,6 +27,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.ada_tech_quizz.R;
 import com.example.ada_tech_quizz.model.Player;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -129,18 +130,22 @@ public class MainActivity extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         mMessageTextView.setText("Response: " + response.toString());
                         // RECUPERER LA REPONSE POUR CREER LES INTENT
-                        Gson gson = new Gson();
+                        Gson gson = new GsonBuilder().create();
+                        final Player mPlayer = gson.fromJson(String.valueOf(response),Player.class);
+
+
                         Intent gameActivityIntent = new Intent(MainActivity.this, GameActivity.class);
-                        String name =  "JEREMY";
-                        String email = "toto@mail.com";
-                        int bestScore = 2;
-                        int totalQuestions = 20;
-                        int totalPoints = 15;
-                        gameActivityIntent.putExtra("name_key", name);
-                        gameActivityIntent.putExtra("email_key", email);
-                        gameActivityIntent.putExtra("bestScore_key", bestScore);
-                        gameActivityIntent.putExtra("totalQuestions_key", totalQuestions);
-                        gameActivityIntent.putExtra("totalPoints_key", totalPoints);
+                        //String name =  "JEREMY";
+                        //String email = "toto@mail.com";
+                        //int bestScore = 2;
+                        //int totalQuestions = 20;
+                        //int totalPoints = 15;
+                        gameActivityIntent.putExtra("name_key", mPlayer.getFirstName());
+                        gameActivityIntent.putExtra("email_key", mPlayer.getEmail());
+                        gameActivityIntent.putExtra("bestScore_key", mPlayer.getBestScore());
+                        gameActivityIntent.putExtra("totalQuestions_key", mPlayer.getTotalQuestions());
+                        gameActivityIntent.putExtra("totalPoints_key", mPlayer.getTotalScore());
+                        gameActivityIntent.putExtra("ID_key", mPlayer.getID());
                         startActivity(gameActivityIntent);
                     }
                 }, new Response.ErrorListener() {
