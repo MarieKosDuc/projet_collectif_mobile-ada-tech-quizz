@@ -4,6 +4,7 @@ public class Player {
     private String mFirstName;
     private String mEmail;
     private String mPassword;
+    private int bestScore;
 
     public String getEmail() {
         return mEmail;

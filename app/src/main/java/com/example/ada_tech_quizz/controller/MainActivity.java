@@ -19,6 +19,9 @@ public class MainActivity extends AppCompatActivity {
     private EditText mNameEditText;
     private Button mPlayButton, mSignUpButton;
 
+    private Player mPlayer;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +66,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Player mPlayer = new Player();
+        mPlayer = new Player();
+
 
         mPlayButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,9 +76,9 @@ public class MainActivity extends AppCompatActivity {
                 Intent gameActivityIntent = new Intent(MainActivity.this, GameActivity.class);
                 String name =  "toto";
                 String email = "toto@mail.com";
-                int bestScore = 0;
-                int totalQuestions = 0;
-                int totalPoints = 0;
+                int bestScore = 8;
+                int totalQuestions = 1;
+                int totalPoints = 2;
                 gameActivityIntent.putExtra("name_key", name);
                 gameActivityIntent.putExtra("email_key", email);
                 gameActivityIntent.putExtra("bestScore_key", bestScore);

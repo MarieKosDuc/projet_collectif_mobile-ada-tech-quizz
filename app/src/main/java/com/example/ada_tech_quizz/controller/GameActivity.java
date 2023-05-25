@@ -62,7 +62,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     // variables for Volley library
     private RequestQueue mRequestQueue;
     private StringRequest mStringRequest;
-    private String url = "http://192.168.4.100:8085/questions";
+    private String url = "http://172.17.0.1:8085/questions";
 
 
     // ON CREATE: method to initialize the game screen
@@ -88,6 +88,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         // gets the player's name from the intent that launched GameActivity.class
         Intent intent = getIntent();
         mPlayer.setFirstName(intent.getStringExtra("name_key"));
+        mPlayer.setBestScore(intent.getIntExtra("bestScore_key", 0));
+        int val = mPlayer.getBestScore();
+        Toast.makeText(GameActivity.this, "Best Score: " + val, Toast.LENGTH_SHORT).show();
+
+
+
 
         getData();
 
@@ -246,9 +252,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     // new intent that launches ScoreActivity.class and sends the player's name and score
                     Intent scoreActivityIntent = new Intent(GameActivity.this, ScoreActivity.class);
                     String name = mPlayer.getFirstName();
+
+                    int bestScore = mPlayer.getBestScore();
                     int score = mScore;
                     scoreActivityIntent.putExtra("name_key", name);
                     scoreActivityIntent.putExtra("score_key", score);
+                    scoreActivityIntent.putExtra("bestScore_key", bestScore);
                     startActivity(scoreActivityIntent);
 
                 }
