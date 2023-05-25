@@ -19,6 +19,15 @@ public class Player {
     private int mTotalScore;
     private int mTotalQuestions;
 
+    private int mID;
+
+    public int getID() {
+        return mID;
+    }
+
+    public void setID(int ID) {
+        mID = ID;
+    }
 
 
     public int getTotalQuestions() {
