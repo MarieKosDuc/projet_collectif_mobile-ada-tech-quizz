@@ -21,6 +21,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.ada_tech_quizz.R;
@@ -40,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
 
     // variables for Volley library
     private RequestQueue mRequestQueue;
-    private StringRequest mStringRequest;
     private String url = "http://192.168.6.29:8085/login";
 
     @Override
@@ -111,60 +111,35 @@ public class MainActivity extends AppCompatActivity {
 
     private void sendData() throws JSONException {
 
-        try {
-            // RequestQueue initialized
-            mRequestQueue = Volley.newRequestQueue(this);
+        // RequestQueue initialized
+        mRequestQueue = Volley.newRequestQueue(this);
 
-            // Creating the JSON object that will be sent to the API
-            JSONObject jsonBody = new JSONObject();
-            jsonBody.put("email", mEmailEditText.getText().toString());
-            jsonBody.put("password", mPasswordEditText.getText().toString());
-            final String requestBody = jsonBody.toString();
+        // Creating the JSON object that will be sent to the API
+        JSONObject jsonBody = new JSONObject();
+        jsonBody.put("email", mEmailEditText.getText().toString());
+        jsonBody.put("password", mPasswordEditText.getText().toString());
 
-            // String Request initialized
-            mStringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                    mMessageTextView.setText(response.toString());
-                    Log.i("VOLLEY", response);
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.e("VOLLEY", error.toString());
-                }
-            }) {
-                @Override
-                public String getBodyContentType() {
-                    return "application/json; charset=utf-8";
-                }
+        JsonObjectRequest mJsonObjectRequest = new JsonObjectRequest
+                (Request.Method.POST, url, jsonBody, new Response.Listener<JSONObject>() {
 
-                @Override
-                public byte[] getBody() throws AuthFailureError {
-                    try {
-                        return requestBody == null ? null : requestBody.getBytes("utf-8");
-                    } catch (UnsupportedEncodingException uee) {
-                        VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", requestBody, "utf-8");
-                        return null;
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        mMessageTextView.setText("Response: " + response.toString());
+                        // RECUPERER LA REPONSE POUR CREER LES INTENT
                     }
-                }
+                }, new Response.ErrorListener() {
 
-                @Override
-                protected Response<String> parseNetworkResponse(NetworkResponse response) {
-                    String responseString = "";
-                    if (response != null) {
-                        responseString = String.valueOf(response.statusCode);
-                        }
-                        // can get more details such as response.headers
-                    return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
-                }
-            };
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+                        Log.i("VOLLEY", error.toString());
+                    }
+                });
 
-            mRequestQueue.add(mStringRequest);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        // Here we should use a singleton, but we deemed it too complicated for this simple app
+        // https://stackoverflow.com/questions/41120064/what-is-the-use-of-singleton-class-in-volley
+        // https://google.github.io/volley/request.html
+        mRequestQueue.add(mJsonObjectRequest);
     }
-
 
 }
