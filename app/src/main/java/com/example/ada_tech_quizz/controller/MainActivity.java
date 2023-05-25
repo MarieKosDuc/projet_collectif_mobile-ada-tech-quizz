@@ -133,6 +133,8 @@ public class MainActivity extends AppCompatActivity {
                         Gson gson = new GsonBuilder().create();
                         final Player mPlayer = gson.fromJson(String.valueOf(response),Player.class);
 
+                        int id = mPlayer.getId();
+
 
                         Intent gameActivityIntent = new Intent(MainActivity.this, GameActivity.class);
                         //String name =  "JEREMY";
@@ -144,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
                         gameActivityIntent.putExtra("bestScore_key", mPlayer.getBestScore());
                         gameActivityIntent.putExtra("totalQuestions_key", mPlayer.getTotalQuestions());
                         gameActivityIntent.putExtra("totalPoints_key", mPlayer.getTotalPoints());
-                        gameActivityIntent.putExtra("ID_key", mPlayer.getId());
+                        gameActivityIntent.putExtra("id_key", id);
                         startActivity(gameActivityIntent);
                     }
                 }, new Response.ErrorListener() {

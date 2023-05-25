@@ -255,13 +255,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     int totalQuestions = mPlayer.getTotalQuestions();
                     int totalPoints = mPlayer.getTotalPoints();
                     int score = mScore;
+                    int id = mPlayer.getId();
                     scoreActivityIntent.putExtra("name_key", name);
                     scoreActivityIntent.putExtra("score_key", score);
                     scoreActivityIntent.putExtra("bestScore_key", bestScore);
                     scoreActivityIntent.putExtra("totalQuestions_key", totalQuestions);
                     scoreActivityIntent.putExtra("totalPoints_key", totalPoints);
                     scoreActivityIntent.putExtra("totalQuestionsSeries_key", mTotalQuestionSeries);
-
+                    scoreActivityIntent.putExtra("id_key", id);
 
                     startActivity(scoreActivityIntent);
 
