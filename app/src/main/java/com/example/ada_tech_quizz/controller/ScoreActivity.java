@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -41,7 +42,7 @@ public class ScoreActivity extends AppCompatActivity {
     // variables for Volley library
     private RequestQueue mRequestQueue;
 
-    private String url;
+    public String url;
 
 
 
@@ -60,19 +61,16 @@ public class ScoreActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Player mPlayer = new Player(intent.getIntExtra("id_key",0),intent.getStringExtra("name_key"), intent.getIntExtra("bestScore_key",0), intent.getIntExtra("totalQuestions_key",0),intent.getIntExtra("totalPoints_key",0), intent.getIntExtra("score_key",0));
 
-        //setting the player's score for this session
         mPlayer.setScore(intent.getIntExtra("score_key", 0));
+
+        int totalPoints = mPlayer.getTotalPoints();
+        int totalQuestions = mPlayer.getTotalQuestions();
 
         // Setting the best score: if the current score is superior to previous best score, replace it
         if(intent.getIntExtra("score_key",0) > mPlayer.getBestScore()){
             mPlayer.setBestScore(intent.getIntExtra("score_key",0));
         }
 
-        // Setting the total points for the player
-        mPlayer.setTotalPoints(mPlayer.getTotalPoints() + intent.getIntExtra("score_key",0));
-
-        // Setting the total questions played for the player
-        mPlayer.setTotalQuestions(mPlayer.getTotalQuestions() + intent.getIntExtra("totalQuestionsSeries_key",0));
 
         // Displays the player's name and score
         mCongratsTextView.setText("BRAVO " + mPlayer.getName());
@@ -80,45 +78,46 @@ public class ScoreActivity extends AppCompatActivity {
         mPlayerBestScoreTextView.setText(Integer.toString(mPlayer.getBestScore()) + "/" + intent.getIntExtra("totalQuestionsSeries_key", 0));
         mPlayerTotalScoreTextView.setText(Integer.toString(mPlayer.getTotalPoints())+ "/" + Integer.toString(mPlayer.getTotalQuestions()) );
 
+        url = "http://192.168.6.29:8085/users/" + Integer.toString(mPlayer.getId());
+
+        Toast.makeText(this, url, Toast.LENGTH_SHORT).show();
+
+
 
         // On click on "play again": restart the game (from GameActivity.class)
         mPlayAgainButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                try {
-//                    sendData();
-//                } catch (JSONException e) {
-//                    throw new RuntimeException(e);
-//                }
+                try {
+                    sendData(mPlayer);
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
                 // Start new gameActivity with actualized data
-                Intent gameActivityIntent = new Intent(ScoreActivity.this, GameActivity.class);
-
-                gameActivityIntent.putExtra("name_key", mPlayer.getName());
-                gameActivityIntent.putExtra("bestScore_key", mPlayer.getBestScore());
-                gameActivityIntent.putExtra("totalQuestions_key", mPlayer.getTotalQuestions());
-                gameActivityIntent.putExtra("totalPoints_key", mPlayer.getTotalPoints());
-                gameActivityIntent.putExtra("ID_key", mPlayer.getId());
-                startActivity(gameActivityIntent);
+//                Intent gameActivityIntent = new Intent(ScoreActivity.this, GameActivity.class);
+//
+//                gameActivityIntent.putExtra("name_key", mPlayer.getName());
+//                gameActivityIntent.putExtra("bestScore_key", mPlayer.getBestScore());
+//                gameActivityIntent.putExtra("totalQuestions_key", mPlayer.getTotalQuestions());
+//                gameActivityIntent.putExtra("totalPoints_key", mPlayer.getTotalPoints());
+//                gameActivityIntent.putExtra("ID_key", mPlayer.getId());
+//                startActivity(gameActivityIntent);
             }
         });
 
     }
 
 
-    private void sendData() throws JSONException {
+    private void sendData(Player player) throws JSONException {
 
         // RequestQueue initialized
         mRequestQueue = Volley.newRequestQueue(this);
 
-        url = "http://192.168.6.29:8085/users/" + Integer.toString(mPlayer.getId());
-
-        System.out.print(url);
-
         // Creating the JSON object that will be sent to the API
         JSONObject jsonBody = new JSONObject();
-        jsonBody.put("bestScore", mPlayerScoreTextView.getText().toString());
-        jsonBody.put("totalQuestions", mTotalQuestions);
-        jsonBody.put("totalPoints", mTotalPoints);
+        jsonBody.put("bestScore", player.getBestScore());
+        jsonBody.put("totalQuestions", player.getTotalQuestions());
+        jsonBody.put("totalPoints", player.getTotalPoints());
 
         JsonObjectRequest mJsonObjectRequest = new JsonObjectRequest
                 (Request.Method.PUT, url, jsonBody, new Response.Listener<JSONObject>() {
@@ -127,14 +126,14 @@ public class ScoreActivity extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
 
 //                        // Start new gameActivity with actualized data
-//                        Intent gameActivityIntent = new Intent(ScoreActivity.this, GameActivity.class);
-//
-//                        gameActivityIntent.putExtra("name_key", mPlayer.getName());
-//                        gameActivityIntent.putExtra("bestScore_key", mPlayer.getBestScore());
-//                        gameActivityIntent.putExtra("totalQuestions_key", mPlayer.getTotalQuestions());
-//                        gameActivityIntent.putExtra("totalPoints_key", mPlayer.getTotalPoints());
-//                        gameActivityIntent.putExtra("ID_key", mPlayer.getId());
-//                        startActivity(gameActivityIntent);
+                        Intent gameActivityIntent = new Intent(ScoreActivity.this, GameActivity.class);
+
+                        gameActivityIntent.putExtra("name_key", player.getName());
+                        gameActivityIntent.putExtra("bestScore_key", player.getBestScore());
+                        gameActivityIntent.putExtra("totalQuestions_key", player.getTotalQuestions());
+                        gameActivityIntent.putExtra("totalPoints_key", player.getTotalPoints());
+                        gameActivityIntent.putExtra("id_key", player.getId());
+                        startActivity(gameActivityIntent);
                     }
                 }, new Response.ErrorListener() {
 

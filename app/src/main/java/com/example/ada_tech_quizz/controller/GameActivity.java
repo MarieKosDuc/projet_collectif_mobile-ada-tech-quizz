@@ -44,7 +44,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     public QuestionBank mQuestionBank;
 
     // IF THE NUMBER OF QUESTIONS IS CHANGED, MODIFY THE 2 VARIABLES QuestionNumber AND TotalQuestionSeries
-    private int mScore = 0, mQuestionNumber = 5, mTotalQuestionSeries = 5;
+    private int mScore = 0, mQuestionNumber = 2, mTotalQuestionSeries = 2;
 
     public Player mPlayer;
     // variables for Volley library
@@ -252,8 +252,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     Intent scoreActivityIntent = new Intent(GameActivity.this, ScoreActivity.class);
                     String name = mPlayer.getName();
                     int bestScore = mPlayer.getBestScore();
-                    int totalQuestions = mPlayer.getTotalQuestions();
-                    int totalPoints = mPlayer.getTotalPoints();
+                    int totalQuestions = mPlayer.getTotalQuestions() + mTotalQuestionSeries;
+                    int totalPoints = mPlayer.getTotalPoints() + mScore;
                     int score = mScore;
                     int id = mPlayer.getId();
                     scoreActivityIntent.putExtra("name_key", name);
