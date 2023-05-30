@@ -44,7 +44,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     public QuestionBank mQuestionBank;
 
     // IF THE NUMBER OF QUESTIONS IS CHANGED, MODIFY THE 2 VARIABLES QuestionNumber AND TotalQuestionSeries
-    private int mScore = 0, mQuestionNumber = 2, mTotalQuestionSeries = 2;
+    private int mScore = 0, mQuestionNumber = 10, mTotalQuestionSeries = 10;
 
     public Player mPlayer;
     // variables for Volley library
@@ -77,27 +77,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         Intent intent = getIntent();
         mPlayer = new Player(intent.getIntExtra("id_key",0),intent.getStringExtra("name_key"), intent.getIntExtra("bestScore_key",0), intent.getIntExtra("totalQuestions_key",0),intent.getIntExtra("totalPoints_key",0),0);
 
-
-        //mPlayer.setFirstName(intent.getStringExtra("name_key"));
-        //mPlayer.setBestScore(intent.getIntExtra("bestScore_key", 0));
-        //mPlayer.setTotalQuestions(intent.getIntExtra("totalQuestions_key", 0));
-        //mPlayer.setTotalScore(intent.getIntExtra("totalPoints_key",0));
-
-        //int value = mPlayer.getTotalScore();
-        //Toast.makeText(GameActivity.this, "Best Score: " + value, Toast.LENGTH_SHORT).show();
-
-
-
-
         getData();
-
-        //set question bank
-        //mQuestionBank = initializeQuestionBank();
-
-        // displays the first question
-        //displayQuestion(mQuestionBank.getCurrentQuestion());
-
-        //END OF ONCREATE METHOD
     }
 
     private void getData() {
